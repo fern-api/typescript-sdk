@@ -10,6 +10,7 @@ export const GetSnippetRequest: core.serialization.Schema<
     serializers.snippets.GetSnippetRequest.Raw,
     Fern.snippets.GetSnippetRequest
 > = core.serialization.object({
+    orgId: core.serialization.lazy(async () => (await import("../../../..")).snippets.OrgId).optional(),
     apiId: core.serialization.lazy(async () => (await import("../../../..")).snippets.ApiId).optional(),
     sdks: core.serialization
         .list(core.serialization.lazy(async () => (await import("../../../..")).snippets.Sdk))
@@ -19,6 +20,7 @@ export const GetSnippetRequest: core.serialization.Schema<
 
 export declare namespace GetSnippetRequest {
     interface Raw {
+        orgId?: serializers.snippets.OrgId.Raw | null;
         apiId?: serializers.snippets.ApiId.Raw | null;
         sdks?: serializers.snippets.Sdk.Raw[] | null;
         endpoint: serializers.snippets.EndpointIdentifier.Raw;

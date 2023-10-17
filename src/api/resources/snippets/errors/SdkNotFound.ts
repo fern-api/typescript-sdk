@@ -5,9 +5,10 @@
 import * as errors from "../../../../errors";
 
 export class SdkNotFound extends errors.FernError {
-    constructor() {
+    constructor(body: string) {
         super({
             statusCode: 404,
+            body: body,
         });
         Object.setPrototypeOf(this, SdkNotFound.prototype);
     }

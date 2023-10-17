@@ -10,7 +10,7 @@ export const SnippetsPage: core.serialization.ObjectSchema<
     serializers.snippets.SnippetsPage.Raw,
     Fern.snippets.SnippetsPage
 > = core.serialization.object({
-    next: core.serialization.string().optional(),
+    next: core.serialization.number().optional(),
     snippets: core.serialization.record(
         core.serialization.lazy(async () => (await import("../../..")).snippets.EndpointPath),
         core.serialization.lazy(async () => (await import("../../..")).snippets.SnippetsByEndpointMethod)
@@ -19,7 +19,7 @@ export const SnippetsPage: core.serialization.ObjectSchema<
 
 export declare namespace SnippetsPage {
     interface Raw {
-        next?: string | null;
+        next?: number | null;
         snippets: Record<serializers.snippets.EndpointPath.Raw, serializers.snippets.SnippetsByEndpointMethod.Raw>;
     }
 }

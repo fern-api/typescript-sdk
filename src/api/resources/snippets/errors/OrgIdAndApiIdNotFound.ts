@@ -4,12 +4,12 @@
 
 import * as errors from "../../../../errors";
 
-export class EndpointNotFound extends errors.FernError {
+export class OrgIdAndApiIdNotFound extends errors.FernError {
     constructor(body: string) {
         super({
-            statusCode: 404,
+            statusCode: 400,
             body: body,
         });
-        Object.setPrototypeOf(this, EndpointNotFound.prototype);
+        Object.setPrototypeOf(this, OrgIdAndApiIdNotFound.prototype);
     }
 }

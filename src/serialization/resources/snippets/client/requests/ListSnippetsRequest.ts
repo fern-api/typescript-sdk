@@ -10,6 +10,7 @@ export const ListSnippetsRequest: core.serialization.Schema<
     serializers.snippets.ListSnippetsRequest.Raw,
     Omit<Fern.snippets.ListSnippetsRequest, "page">
 > = core.serialization.object({
+    orgId: core.serialization.lazy(async () => (await import("../../../..")).snippets.OrgId).optional(),
     apiId: core.serialization.lazy(async () => (await import("../../../..")).snippets.ApiId).optional(),
     sdks: core.serialization
         .list(core.serialization.lazy(async () => (await import("../../../..")).snippets.Sdk))
@@ -18,6 +19,7 @@ export const ListSnippetsRequest: core.serialization.Schema<
 
 export declare namespace ListSnippetsRequest {
     interface Raw {
+        orgId?: serializers.snippets.OrgId.Raw | null;
         apiId?: serializers.snippets.ApiId.Raw | null;
         sdks?: serializers.snippets.Sdk.Raw[] | null;
     }

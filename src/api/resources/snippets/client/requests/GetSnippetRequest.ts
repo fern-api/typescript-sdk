@@ -6,6 +6,12 @@ import * as Fern from "../../../..";
 
 export interface GetSnippetRequest {
     /**
+     * If the same API is defined across multiple organization,
+     * you must specify an organization ID.
+     *
+     */
+    orgId?: Fern.snippets.OrgId;
+    /**
      * If you have more than one API, you must specify its ID.
      *
      */
