@@ -7,6 +7,7 @@ import * as errors from "../../../../errors";
 export class EndpointNotFound extends errors.FernError {
     constructor(body: string) {
         super({
+            message: "EndpointNotFound",
             statusCode: 404,
             body: body,
         });

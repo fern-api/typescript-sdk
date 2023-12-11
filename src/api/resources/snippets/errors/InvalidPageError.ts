@@ -7,6 +7,7 @@ import * as errors from "../../../../errors";
 export class InvalidPageError extends errors.FernError {
     constructor(body: string) {
         super({
+            message: "InvalidPageError",
             statusCode: 400,
             body: body,
         });

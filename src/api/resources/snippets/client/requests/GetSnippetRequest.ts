@@ -4,6 +4,15 @@
 
 import * as Fern from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         endpoint: {
+ *             method: Fern.snippets.EndpointMethod.Get,
+ *             path: "/v1/search"
+ *         }
+ *     }
+ */
 export interface GetSnippetRequest {
     /**
      * If the same API is defined across multiple organization,

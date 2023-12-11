@@ -14,6 +14,7 @@ export declare namespace FernClient {
 
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 

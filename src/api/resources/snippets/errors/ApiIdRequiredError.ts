@@ -7,6 +7,7 @@ import * as errors from "../../../../errors";
 export class ApiIdRequiredError extends errors.FernError {
     constructor(body: string) {
         super({
+            message: "ApiIdRequiredError",
             statusCode: 400,
             body: body,
         });

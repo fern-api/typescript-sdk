@@ -8,7 +8,6 @@ import * as Fern from "../../..";
 import * as serializers from "../../../../serialization";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors";
-import { default as URLSearchParams } from "@ungap/url-search-params";
 
 export declare namespace Snippets {
     interface Options {
@@ -18,6 +17,7 @@ export declare namespace Snippets {
 
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 
@@ -36,6 +36,14 @@ export class Snippets {
      * @throws {@link Fern.snippets.ApiIdNotFound}
      * @throws {@link Fern.snippets.EndpointNotFound}
      * @throws {@link Fern.snippets.SdkNotFound}
+     *
+     * @example
+     *     await fern.snippets.get({
+     *         endpoint: {
+     *             method: Fern.snippets.EndpointMethod.Get,
+     *             path: "/v1/search"
+     *         }
+     *     })
      */
     public async get(
         request: Fern.snippets.GetSnippetRequest,
@@ -51,13 +59,14 @@ export class Snippets {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern-api/node-sdk",
-                "X-Fern-SDK-Version": "0.1.1",
+                "X-Fern-SDK-Version": "0.2.0",
             },
             contentType: "application/json",
             body: await serializers.snippets.GetSnippetRequest.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.snippets.get.Response.parseOrThrow(_response.body, {
@@ -187,15 +196,27 @@ export class Snippets {
      * @throws {@link Fern.snippets.OrgIdNotFound}
      * @throws {@link Fern.snippets.ApiIdNotFound}
      * @throws {@link Fern.snippets.SdkNotFound}
+     *
+     * @example
+     *     await fern.snippets.load({
+     *         page: 1,
+     *         orgId: "vellum",
+     *         apiId: "vellum-ai",
+     *         sdks: [{
+     *                 type: "python",
+     *                 package: "vellum-ai",
+     *                 version: "1.2.1"
+     *             }]
+     *     })
      */
     public async load(
         request: Fern.snippets.ListSnippetsRequest = {},
         requestOptions?: Snippets.RequestOptions
     ): Promise<Fern.snippets.SnippetsPage> {
         const { page, ..._body } = request;
-        const _queryParams = new URLSearchParams();
+        const _queryParams: Record<string, string | string[]> = {};
         if (page != null) {
-            _queryParams.append("page", page.toString());
+            _queryParams["page"] = page.toString();
         }
 
         const _response = await core.fetcher({
@@ -208,7 +229,7 @@ export class Snippets {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern-api/node-sdk",
-                "X-Fern-SDK-Version": "0.1.1",
+                "X-Fern-SDK-Version": "0.2.0",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -216,6 +237,7 @@ export class Snippets {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.snippets.SnippetsPage.parseOrThrow(_response.body, {

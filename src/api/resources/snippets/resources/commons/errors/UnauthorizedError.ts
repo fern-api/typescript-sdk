@@ -7,6 +7,7 @@ import * as errors from "../../../../../../errors";
 export class UnauthorizedError extends errors.FernError {
     constructor(body: string) {
         super({
+            message: "UnauthorizedError",
             statusCode: 401,
             body: body,
         });

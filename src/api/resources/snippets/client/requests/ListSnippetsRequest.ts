@@ -4,6 +4,19 @@
 
 import * as Fern from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         page: 1,
+ *         orgId: "vellum",
+ *         apiId: "vellum-ai",
+ *         sdks: [{
+ *                 type: "python",
+ *                 package: "vellum-ai",
+ *                 version: "1.2.1"
+ *             }]
+ *     }
+ */
 export interface ListSnippetsRequest {
     page?: number;
     /**

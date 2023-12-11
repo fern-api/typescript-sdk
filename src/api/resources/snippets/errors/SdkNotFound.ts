@@ -7,6 +7,7 @@ import * as errors from "../../../../errors";
 export class SdkNotFound extends errors.FernError {
     constructor(body: string) {
         super({
+            message: "SDKNotFound",
             statusCode: 404,
             body: body,
         });

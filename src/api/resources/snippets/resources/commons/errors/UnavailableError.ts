@@ -7,6 +7,7 @@ import * as errors from "../../../../../../errors";
 export class UnavailableError extends errors.FernError {
     constructor(body: string) {
         super({
+            message: "UnavailableError",
             statusCode: 503,
             body: body,
         });

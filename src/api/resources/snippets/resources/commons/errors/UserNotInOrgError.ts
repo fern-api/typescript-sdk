@@ -7,6 +7,7 @@ import * as errors from "../../../../../../errors";
 export class UserNotInOrgError extends errors.FernError {
     constructor() {
         super({
+            message: "UserNotInOrgError",
             statusCode: 403,
         });
         Object.setPrototypeOf(this, UserNotInOrgError.prototype);
