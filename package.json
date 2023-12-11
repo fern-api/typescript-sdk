@@ -1,6 +1,6 @@
 {
     "name": "@fern-api/node-sdk",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "private": false,
     "repository": "https://github.com/fern-api/node-sdk",
     "main": "./index.js",
