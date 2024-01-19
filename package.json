@@ -1,8 +1,9 @@
 {
     "name": "@fern-api/node-sdk",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "private": false,
     "repository": "https://github.com/fern-api/node-sdk",
+    "license": "MIT",
     "main": "./index.js",
     "types": "./index.d.ts",
     "scripts": {
