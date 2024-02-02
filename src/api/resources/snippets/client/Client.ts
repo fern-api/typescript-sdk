@@ -59,7 +59,7 @@ export class Snippets {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern-api/node-sdk",
-                "X-Fern-SDK-Version": "0.2.5",
+                "X-Fern-SDK-Version": "0.2.6",
             },
             contentType: "application/json",
             body: await serializers.snippets.GetSnippetRequest.jsonOrThrow(request, {
@@ -229,7 +229,7 @@ export class Snippets {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern-api/node-sdk",
-                "X-Fern-SDK-Version": "0.2.5",
+                "X-Fern-SDK-Version": "0.2.6",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
