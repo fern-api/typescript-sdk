@@ -10,4 +10,31 @@ export const EndpointMethod = {
     Get: "GET",
     Patch: "PATCH",
     Delete: "DELETE",
+    _visit: <R>(value: EndpointMethod, visitor: EndpointMethod.Visitor<R>) => {
+        switch (value) {
+            case EndpointMethod.Put:
+                return visitor.put();
+            case EndpointMethod.Post:
+                return visitor.post();
+            case EndpointMethod.Get:
+                return visitor.get();
+            case EndpointMethod.Patch:
+                return visitor.patch();
+            case EndpointMethod.Delete:
+                return visitor.delete();
+            default:
+                return visitor._other();
+        }
+    },
 } as const;
+
+export declare namespace EndpointMethod {
+    interface Visitor<R> {
+        put: () => R;
+        post: () => R;
+        get: () => R;
+        patch: () => R;
+        delete: () => R;
+        _other: () => R;
+    }
+}

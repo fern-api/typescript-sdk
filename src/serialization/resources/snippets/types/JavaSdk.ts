@@ -6,7 +6,7 @@ import * as serializers from "../../..";
 import * as Fern from "../../../../api";
 import * as core from "../../../../core";
 
-export const JavaSdk: core.serialization.ObjectSchema<serializers.snippets.JavaSdk.Raw, Fern.snippets.JavaSdk> =
+export const JavaSdk: core.serialization.ObjectSchema<serializers.JavaSdk.Raw, Fern.JavaSdk> =
     core.serialization.object({
         group: core.serialization.string(),
         artifact: core.serialization.string(),

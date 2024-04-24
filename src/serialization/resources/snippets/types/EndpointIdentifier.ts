@@ -5,18 +5,20 @@
 import * as serializers from "../../..";
 import * as Fern from "../../../../api";
 import * as core from "../../../../core";
+import { EndpointPath } from "./EndpointPath";
+import { EndpointMethod } from "./EndpointMethod";
 
 export const EndpointIdentifier: core.serialization.ObjectSchema<
-    serializers.snippets.EndpointIdentifier.Raw,
-    Fern.snippets.EndpointIdentifier
+    serializers.EndpointIdentifier.Raw,
+    Fern.EndpointIdentifier
 > = core.serialization.object({
-    path: core.serialization.lazy(async () => (await import("../../..")).snippets.EndpointPath),
-    method: core.serialization.lazy(async () => (await import("../../..")).snippets.EndpointMethod),
+    path: EndpointPath,
+    method: EndpointMethod,
 });
 
 export declare namespace EndpointIdentifier {
     interface Raw {
-        path: serializers.snippets.EndpointPath.Raw;
-        method: serializers.snippets.EndpointMethod.Raw;
+        path: EndpointPath.Raw;
+        method: EndpointMethod.Raw;
     }
 }

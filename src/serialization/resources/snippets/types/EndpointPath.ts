@@ -6,10 +6,8 @@ import * as serializers from "../../..";
 import * as Fern from "../../../../api";
 import * as core from "../../../../core";
 
-export const EndpointPath: core.serialization.Schema<
-    serializers.snippets.EndpointPath.Raw,
-    Fern.snippets.EndpointPath
-> = core.serialization.string();
+export const EndpointPath: core.serialization.Schema<serializers.EndpointPath.Raw, Fern.EndpointPath> =
+    core.serialization.string();
 
 export declare namespace EndpointPath {
     type Raw = string;

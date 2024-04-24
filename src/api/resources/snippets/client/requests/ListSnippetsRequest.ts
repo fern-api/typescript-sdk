@@ -10,11 +10,10 @@ import * as Fern from "../../../..";
  *         page: 1,
  *         orgId: "vellum",
  *         apiId: "vellum-ai",
- *         sdks: [{
- *                 type: "python",
+ *         sdks: [Fern.Sdk.python({
  *                 package: "vellum-ai",
  *                 version: "1.2.1"
- *             }]
+ *             })]
  *     }
  */
 export interface ListSnippetsRequest {
@@ -24,16 +23,16 @@ export interface ListSnippetsRequest {
      * you must specify an organization ID.
      *
      */
-    orgId?: Fern.snippets.OrgId;
+    orgId?: Fern.OrgId;
     /**
      * If you have more than one API, you must specify its ID.
      *
      */
-    apiId?: Fern.snippets.ApiId;
+    apiId?: Fern.ApiId;
     /**
      * The SDKs for which to load snippets. If unspecified,
      * snippets for the latest published SDKs will be returned.
      *
      */
-    sdks?: Fern.snippets.Sdk[];
+    sdks?: Fern.Sdk[];
 }

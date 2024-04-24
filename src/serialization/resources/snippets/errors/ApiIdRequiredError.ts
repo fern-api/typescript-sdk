@@ -5,7 +5,7 @@
 import * as serializers from "../../..";
 import * as core from "../../../../core";
 
-export const ApiIdRequiredError: core.serialization.Schema<serializers.snippets.ApiIdRequiredError.Raw, string> =
+export const ApiIdRequiredError: core.serialization.Schema<serializers.ApiIdRequiredError.Raw, string> =
     core.serialization.string();
 
 export declare namespace ApiIdRequiredError {

@@ -5,25 +5,112 @@
 import * as Fern from "../../..";
 
 export type Snippet =
-    | Fern.snippets.Snippet.Typescript
-    | Fern.snippets.Snippet.Python
-    | Fern.snippets.Snippet.Java
-    | Fern.snippets.Snippet.Go;
+    | Fern.Snippet.Typescript
+    | Fern.Snippet.Python
+    | Fern.Snippet.Java
+    | Fern.Snippet.Go
+    | Fern.Snippet.Ruby;
 
 export declare namespace Snippet {
-    interface Typescript extends Fern.snippets.TypeScriptSnippet {
+    interface Typescript extends Fern.TypeScriptSnippet, _Utils {
         type: "typescript";
     }
 
-    interface Python extends Fern.snippets.PythonSnippet {
+    interface Python extends Fern.PythonSnippet, _Utils {
         type: "python";
     }
 
-    interface Java extends Fern.snippets.JavaSnippet {
+    interface Java extends Fern.JavaSnippet, _Utils {
         type: "java";
     }
 
-    interface Go extends Fern.snippets.GoSnippet {
+    interface Go extends Fern.GoSnippet, _Utils {
         type: "go";
     }
+
+    interface Ruby extends Fern.RubySnippet, _Utils {
+        type: "ruby";
+    }
+
+    interface _Utils {
+        _visit: <_Result>(visitor: Fern.Snippet._Visitor<_Result>) => _Result;
+    }
+
+    interface _Visitor<_Result> {
+        typescript: (value: Fern.TypeScriptSnippet) => _Result;
+        python: (value: Fern.PythonSnippet) => _Result;
+        java: (value: Fern.JavaSnippet) => _Result;
+        go: (value: Fern.GoSnippet) => _Result;
+        ruby: (value: Fern.RubySnippet) => _Result;
+        _other: (value: { type: string }) => _Result;
+    }
 }
+
+export const Snippet = {
+    typescript: (value: Fern.TypeScriptSnippet): Fern.Snippet.Typescript => {
+        return {
+            ...value,
+            type: "typescript",
+            _visit: function <_Result>(this: Fern.Snippet.Typescript, visitor: Fern.Snippet._Visitor<_Result>) {
+                return Fern.Snippet._visit(this, visitor);
+            },
+        };
+    },
+
+    python: (value: Fern.PythonSnippet): Fern.Snippet.Python => {
+        return {
+            ...value,
+            type: "python",
+            _visit: function <_Result>(this: Fern.Snippet.Python, visitor: Fern.Snippet._Visitor<_Result>) {
+                return Fern.Snippet._visit(this, visitor);
+            },
+        };
+    },
+
+    java: (value: Fern.JavaSnippet): Fern.Snippet.Java => {
+        return {
+            ...value,
+            type: "java",
+            _visit: function <_Result>(this: Fern.Snippet.Java, visitor: Fern.Snippet._Visitor<_Result>) {
+                return Fern.Snippet._visit(this, visitor);
+            },
+        };
+    },
+
+    go: (value: Fern.GoSnippet): Fern.Snippet.Go => {
+        return {
+            ...value,
+            type: "go",
+            _visit: function <_Result>(this: Fern.Snippet.Go, visitor: Fern.Snippet._Visitor<_Result>) {
+                return Fern.Snippet._visit(this, visitor);
+            },
+        };
+    },
+
+    ruby: (value: Fern.RubySnippet): Fern.Snippet.Ruby => {
+        return {
+            ...value,
+            type: "ruby",
+            _visit: function <_Result>(this: Fern.Snippet.Ruby, visitor: Fern.Snippet._Visitor<_Result>) {
+                return Fern.Snippet._visit(this, visitor);
+            },
+        };
+    },
+
+    _visit: <_Result>(value: Fern.Snippet, visitor: Fern.Snippet._Visitor<_Result>): _Result => {
+        switch (value.type) {
+            case "typescript":
+                return visitor.typescript(value);
+            case "python":
+                return visitor.python(value);
+            case "java":
+                return visitor.java(value);
+            case "go":
+                return visitor.go(value);
+            case "ruby":
+                return visitor.ruby(value);
+            default:
+                return visitor._other(value as any);
+        }
+    },
+} as const;

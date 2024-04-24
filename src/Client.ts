@@ -5,11 +5,12 @@
 import * as environments from "./environments";
 import * as core from "./core";
 import { Snippets } from "./api/resources/snippets/client/Client";
+import { Templates } from "./api/resources/templates/client/Client";
 
 export declare namespace FernClient {
     interface Options {
         environment?: core.Supplier<environments.FernEnvironment | string>;
-        token: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
     }
 
     interface RequestOptions {
@@ -19,11 +20,17 @@ export declare namespace FernClient {
 }
 
 export class FernClient {
-    constructor(protected readonly _options: FernClient.Options) {}
+    constructor(protected readonly _options: FernClient.Options = {}) {}
 
     protected _snippets: Snippets | undefined;
 
     public get snippets(): Snippets {
         return (this._snippets ??= new Snippets(this._options));
+    }
+
+    protected _templates: Templates | undefined;
+
+    public get templates(): Templates {
+        return (this._templates ??= new Templates(this._options));
     }
 }
