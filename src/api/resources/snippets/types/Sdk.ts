@@ -4,26 +4,108 @@
 
 import * as Fern from "../../..";
 
-export type Sdk =
-    | Fern.snippets.Sdk.Typescript
-    | Fern.snippets.Sdk.Python
-    | Fern.snippets.Sdk.Go
-    | Fern.snippets.Sdk.Java;
+export type Sdk = Fern.Sdk.Typescript | Fern.Sdk.Python | Fern.Sdk.Go | Fern.Sdk.Ruby | Fern.Sdk.Java;
 
 export declare namespace Sdk {
-    interface Typescript extends Fern.snippets.TypeScriptSdk {
+    interface Typescript extends Fern.TypeScriptSdk, _Utils {
         type: "typescript";
     }
 
-    interface Python extends Fern.snippets.PythonSdk {
+    interface Python extends Fern.PythonSdk, _Utils {
         type: "python";
     }
 
-    interface Go extends Fern.snippets.GoSdk {
+    interface Go extends Fern.GoSdk, _Utils {
         type: "go";
     }
 
-    interface Java extends Fern.snippets.JavaSdk {
+    interface Ruby extends Fern.RubySdk, _Utils {
+        type: "ruby";
+    }
+
+    interface Java extends Fern.JavaSdk, _Utils {
         type: "java";
     }
+
+    interface _Utils {
+        _visit: <_Result>(visitor: Fern.Sdk._Visitor<_Result>) => _Result;
+    }
+
+    interface _Visitor<_Result> {
+        typescript: (value: Fern.TypeScriptSdk) => _Result;
+        python: (value: Fern.PythonSdk) => _Result;
+        go: (value: Fern.GoSdk) => _Result;
+        ruby: (value: Fern.RubySdk) => _Result;
+        java: (value: Fern.JavaSdk) => _Result;
+        _other: (value: { type: string }) => _Result;
+    }
 }
+
+export const Sdk = {
+    typescript: (value: Fern.TypeScriptSdk): Fern.Sdk.Typescript => {
+        return {
+            ...value,
+            type: "typescript",
+            _visit: function <_Result>(this: Fern.Sdk.Typescript, visitor: Fern.Sdk._Visitor<_Result>) {
+                return Fern.Sdk._visit(this, visitor);
+            },
+        };
+    },
+
+    python: (value: Fern.PythonSdk): Fern.Sdk.Python => {
+        return {
+            ...value,
+            type: "python",
+            _visit: function <_Result>(this: Fern.Sdk.Python, visitor: Fern.Sdk._Visitor<_Result>) {
+                return Fern.Sdk._visit(this, visitor);
+            },
+        };
+    },
+
+    go: (value: Fern.GoSdk): Fern.Sdk.Go => {
+        return {
+            ...value,
+            type: "go",
+            _visit: function <_Result>(this: Fern.Sdk.Go, visitor: Fern.Sdk._Visitor<_Result>) {
+                return Fern.Sdk._visit(this, visitor);
+            },
+        };
+    },
+
+    ruby: (value: Fern.RubySdk): Fern.Sdk.Ruby => {
+        return {
+            ...value,
+            type: "ruby",
+            _visit: function <_Result>(this: Fern.Sdk.Ruby, visitor: Fern.Sdk._Visitor<_Result>) {
+                return Fern.Sdk._visit(this, visitor);
+            },
+        };
+    },
+
+    java: (value: Fern.JavaSdk): Fern.Sdk.Java => {
+        return {
+            ...value,
+            type: "java",
+            _visit: function <_Result>(this: Fern.Sdk.Java, visitor: Fern.Sdk._Visitor<_Result>) {
+                return Fern.Sdk._visit(this, visitor);
+            },
+        };
+    },
+
+    _visit: <_Result>(value: Fern.Sdk, visitor: Fern.Sdk._Visitor<_Result>): _Result => {
+        switch (value.type) {
+            case "typescript":
+                return visitor.typescript(value);
+            case "python":
+                return visitor.python(value);
+            case "go":
+                return visitor.go(value);
+            case "ruby":
+                return visitor.ruby(value);
+            case "java":
+                return visitor.java(value);
+            default:
+                return visitor._other(value as any);
+        }
+    },
+} as const;

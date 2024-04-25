@@ -5,7 +5,7 @@
 import * as serializers from "../../..";
 import * as core from "../../../../core";
 
-export const OrgIdAndApiIdNotFound: core.serialization.Schema<serializers.snippets.OrgIdAndApiIdNotFound.Raw, string> =
+export const OrgIdAndApiIdNotFound: core.serialization.Schema<serializers.OrgIdAndApiIdNotFound.Raw, string> =
     core.serialization.string();
 
 export declare namespace OrgIdAndApiIdNotFound {

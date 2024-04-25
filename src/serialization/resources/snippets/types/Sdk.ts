@@ -5,35 +5,60 @@
 import * as serializers from "../../..";
 import * as Fern from "../../../../api";
 import * as core from "../../../../core";
+import { TypeScriptSdk } from "./TypeScriptSdk";
+import { PythonSdk } from "./PythonSdk";
+import { GoSdk } from "./GoSdk";
+import { RubySdk } from "./RubySdk";
+import { JavaSdk } from "./JavaSdk";
 
-export const Sdk: core.serialization.Schema<serializers.snippets.Sdk.Raw, Fern.snippets.Sdk> = core.serialization
+export const Sdk: core.serialization.Schema<serializers.Sdk.Raw, Fern.Sdk> = core.serialization
     .union("type", {
-        typescript: core.serialization.lazyObject(async () => (await import("../../..")).snippets.TypeScriptSdk),
-        python: core.serialization.lazyObject(async () => (await import("../../..")).snippets.PythonSdk),
-        go: core.serialization.lazyObject(async () => (await import("../../..")).snippets.GoSdk),
-        java: core.serialization.lazyObject(async () => (await import("../../..")).snippets.JavaSdk),
+        typescript: TypeScriptSdk,
+        python: PythonSdk,
+        go: GoSdk,
+        ruby: RubySdk,
+        java: JavaSdk,
     })
-    .transform<Fern.snippets.Sdk>({
-        transform: (value) => value,
-        untransform: (value) => value,
+    .transform<Fern.Sdk>({
+        transform: (value) => {
+            switch (value.type) {
+                case "typescript":
+                    return Fern.Sdk.typescript(value);
+                case "python":
+                    return Fern.Sdk.python(value);
+                case "go":
+                    return Fern.Sdk.go(value);
+                case "ruby":
+                    return Fern.Sdk.ruby(value);
+                case "java":
+                    return Fern.Sdk.java(value);
+                default:
+                    return value as Fern.Sdk;
+            }
+        },
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace Sdk {
-    type Raw = Sdk.Typescript | Sdk.Python | Sdk.Go | Sdk.Java;
+    type Raw = Sdk.Typescript | Sdk.Python | Sdk.Go | Sdk.Ruby | Sdk.Java;
 
-    interface Typescript extends serializers.snippets.TypeScriptSdk.Raw {
+    interface Typescript extends TypeScriptSdk.Raw {
         type: "typescript";
     }
 
-    interface Python extends serializers.snippets.PythonSdk.Raw {
+    interface Python extends PythonSdk.Raw {
         type: "python";
     }
 
-    interface Go extends serializers.snippets.GoSdk.Raw {
+    interface Go extends GoSdk.Raw {
         type: "go";
     }
 
-    interface Java extends serializers.snippets.JavaSdk.Raw {
+    interface Ruby extends RubySdk.Raw {
+        type: "ruby";
+    }
+
+    interface Java extends JavaSdk.Raw {
         type: "java";
     }
 }

@@ -5,6 +5,6 @@
 import * as Fern from "../../..";
 
 export interface TypeScriptSnippet {
-    sdk: Fern.snippets.TypeScriptSdk;
+    sdk: Fern.TypeScriptSdk;
     client: string;
 }

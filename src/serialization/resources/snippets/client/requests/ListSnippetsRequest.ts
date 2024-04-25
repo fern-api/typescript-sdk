@@ -5,22 +5,23 @@
 import * as serializers from "../../../..";
 import * as Fern from "../../../../../api";
 import * as core from "../../../../../core";
+import { OrgId } from "../../../commons/types/OrgId";
+import { ApiId } from "../../../commons/types/ApiId";
+import { Sdk } from "../../types/Sdk";
 
 export const ListSnippetsRequest: core.serialization.Schema<
-    serializers.snippets.ListSnippetsRequest.Raw,
-    Omit<Fern.snippets.ListSnippetsRequest, "page">
+    serializers.ListSnippetsRequest.Raw,
+    Omit<Fern.ListSnippetsRequest, "page">
 > = core.serialization.object({
-    orgId: core.serialization.lazy(async () => (await import("../../../..")).snippets.OrgId).optional(),
-    apiId: core.serialization.lazy(async () => (await import("../../../..")).snippets.ApiId).optional(),
-    sdks: core.serialization
-        .list(core.serialization.lazy(async () => (await import("../../../..")).snippets.Sdk))
-        .optional(),
+    orgId: OrgId.optional(),
+    apiId: ApiId.optional(),
+    sdks: core.serialization.list(Sdk).optional(),
 });
 
 export declare namespace ListSnippetsRequest {
     interface Raw {
-        orgId?: serializers.snippets.OrgId.Raw | null;
-        apiId?: serializers.snippets.ApiId.Raw | null;
-        sdks?: serializers.snippets.Sdk.Raw[] | null;
+        orgId?: OrgId.Raw | null;
+        apiId?: ApiId.Raw | null;
+        sdks?: Sdk.Raw[] | null;
     }
 }

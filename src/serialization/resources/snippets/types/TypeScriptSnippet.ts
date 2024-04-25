@@ -5,18 +5,19 @@
 import * as serializers from "../../..";
 import * as Fern from "../../../../api";
 import * as core from "../../../../core";
+import { TypeScriptSdk } from "./TypeScriptSdk";
 
 export const TypeScriptSnippet: core.serialization.ObjectSchema<
-    serializers.snippets.TypeScriptSnippet.Raw,
-    Fern.snippets.TypeScriptSnippet
+    serializers.TypeScriptSnippet.Raw,
+    Fern.TypeScriptSnippet
 > = core.serialization.object({
-    sdk: core.serialization.lazyObject(async () => (await import("../../..")).snippets.TypeScriptSdk),
+    sdk: TypeScriptSdk,
     client: core.serialization.string(),
 });
 
 export declare namespace TypeScriptSnippet {
     interface Raw {
-        sdk: serializers.snippets.TypeScriptSdk.Raw;
+        sdk: TypeScriptSdk.Raw;
         client: string;
     }
 }

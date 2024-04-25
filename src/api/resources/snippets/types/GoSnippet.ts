@@ -5,6 +5,6 @@
 import * as Fern from "../../..";
 
 export interface GoSnippet {
-    sdk: Fern.snippets.GoSdk;
+    sdk: Fern.GoSdk;
     client: string;
 }

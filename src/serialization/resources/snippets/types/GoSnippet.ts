@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as Fern from "../../../../api";
 import * as core from "../../../../core";
+import { GoSdk } from "./GoSdk";
 
-export const GoSnippet: core.serialization.ObjectSchema<serializers.snippets.GoSnippet.Raw, Fern.snippets.GoSnippet> =
+export const GoSnippet: core.serialization.ObjectSchema<serializers.GoSnippet.Raw, Fern.GoSnippet> =
     core.serialization.object({
-        sdk: core.serialization.lazyObject(async () => (await import("../../..")).snippets.GoSdk),
+        sdk: GoSdk,
         client: core.serialization.string(),
     });
 
 export declare namespace GoSnippet {
     interface Raw {
-        sdk: serializers.snippets.GoSdk.Raw;
+        sdk: GoSdk.Raw;
         client: string;
     }
 }

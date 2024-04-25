@@ -6,7 +6,7 @@ import * as serializers from "../../..";
 import * as Fern from "../../../../api";
 import * as core from "../../../../core";
 
-export const PythonSdk: core.serialization.ObjectSchema<serializers.snippets.PythonSdk.Raw, Fern.snippets.PythonSdk> =
+export const PythonSdk: core.serialization.ObjectSchema<serializers.PythonSdk.Raw, Fern.PythonSdk> =
     core.serialization.object({
         package: core.serialization.string(),
         version: core.serialization.string(),

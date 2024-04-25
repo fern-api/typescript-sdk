@@ -5,7 +5,7 @@
 import * as serializers from "../../..";
 import * as core from "../../../../core";
 
-export const InvalidPageError: core.serialization.Schema<serializers.snippets.InvalidPageError.Raw, string> =
+export const InvalidPageError: core.serialization.Schema<serializers.InvalidPageError.Raw, string> =
     core.serialization.string();
 
 export declare namespace InvalidPageError {

@@ -5,7 +5,7 @@
 import * as Fern from "../../..";
 
 export interface JavaSnippet {
-    sdk: Fern.snippets.JavaSdk;
+    sdk: Fern.JavaSdk;
     asyncClient: string;
     syncClient: string;
 }

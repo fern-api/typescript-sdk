@@ -5,21 +5,20 @@
 import * as serializers from "../../..";
 import * as Fern from "../../../../api";
 import * as core from "../../../../core";
+import { EndpointPath } from "./EndpointPath";
+import { SnippetsByEndpointMethod } from "./SnippetsByEndpointMethod";
+import { Snippet } from "./Snippet";
+import { EndpointMethod } from "./EndpointMethod";
 
-export const SnippetsPage: core.serialization.ObjectSchema<
-    serializers.snippets.SnippetsPage.Raw,
-    Fern.snippets.SnippetsPage
-> = core.serialization.object({
-    next: core.serialization.number().optional(),
-    snippets: core.serialization.record(
-        core.serialization.lazy(async () => (await import("../../..")).snippets.EndpointPath),
-        core.serialization.lazy(async () => (await import("../../..")).snippets.SnippetsByEndpointMethod)
-    ),
-});
+export const SnippetsPage: core.serialization.ObjectSchema<serializers.SnippetsPage.Raw, Fern.SnippetsPage> =
+    core.serialization.object({
+        next: core.serialization.number().optional(),
+        snippets: core.serialization.record(EndpointPath, SnippetsByEndpointMethod),
+    });
 
 export declare namespace SnippetsPage {
     interface Raw {
         next?: number | null;
-        snippets: Record<serializers.snippets.EndpointPath.Raw, serializers.snippets.SnippetsByEndpointMethod.Raw>;
+        snippets: Record<EndpointPath.Raw, SnippetsByEndpointMethod.Raw>;
     }
 }

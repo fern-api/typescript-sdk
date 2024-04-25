@@ -5,38 +5,60 @@
 import * as serializers from "../../..";
 import * as Fern from "../../../../api";
 import * as core from "../../../../core";
+import { TypeScriptSnippet } from "./TypeScriptSnippet";
+import { PythonSnippet } from "./PythonSnippet";
+import { JavaSnippet } from "./JavaSnippet";
+import { GoSnippet } from "./GoSnippet";
+import { RubySnippet } from "./RubySnippet";
 
-export const Snippet: core.serialization.Schema<serializers.snippets.Snippet.Raw, Fern.snippets.Snippet> =
-    core.serialization
-        .union("type", {
-            typescript: core.serialization.lazyObject(
-                async () => (await import("../../..")).snippets.TypeScriptSnippet
-            ),
-            python: core.serialization.lazyObject(async () => (await import("../../..")).snippets.PythonSnippet),
-            java: core.serialization.lazyObject(async () => (await import("../../..")).snippets.JavaSnippet),
-            go: core.serialization.lazyObject(async () => (await import("../../..")).snippets.GoSnippet),
-        })
-        .transform<Fern.snippets.Snippet>({
-            transform: (value) => value,
-            untransform: (value) => value,
-        });
+export const Snippet: core.serialization.Schema<serializers.Snippet.Raw, Fern.Snippet> = core.serialization
+    .union("type", {
+        typescript: TypeScriptSnippet,
+        python: PythonSnippet,
+        java: JavaSnippet,
+        go: GoSnippet,
+        ruby: RubySnippet,
+    })
+    .transform<Fern.Snippet>({
+        transform: (value) => {
+            switch (value.type) {
+                case "typescript":
+                    return Fern.Snippet.typescript(value);
+                case "python":
+                    return Fern.Snippet.python(value);
+                case "java":
+                    return Fern.Snippet.java(value);
+                case "go":
+                    return Fern.Snippet.go(value);
+                case "ruby":
+                    return Fern.Snippet.ruby(value);
+                default:
+                    return value as Fern.Snippet;
+            }
+        },
+        untransform: ({ _visit, ...value }) => value as any,
+    });
 
 export declare namespace Snippet {
-    type Raw = Snippet.Typescript | Snippet.Python | Snippet.Java | Snippet.Go;
+    type Raw = Snippet.Typescript | Snippet.Python | Snippet.Java | Snippet.Go | Snippet.Ruby;
 
-    interface Typescript extends serializers.snippets.TypeScriptSnippet.Raw {
+    interface Typescript extends TypeScriptSnippet.Raw {
         type: "typescript";
     }
 
-    interface Python extends serializers.snippets.PythonSnippet.Raw {
+    interface Python extends PythonSnippet.Raw {
         type: "python";
     }
 
-    interface Java extends serializers.snippets.JavaSnippet.Raw {
+    interface Java extends JavaSnippet.Raw {
         type: "java";
     }
 
-    interface Go extends serializers.snippets.GoSnippet.Raw {
+    interface Go extends GoSnippet.Raw {
         type: "go";
+    }
+
+    interface Ruby extends RubySnippet.Raw {
+        type: "ruby";
     }
 }
