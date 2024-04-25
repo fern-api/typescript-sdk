@@ -5,24 +5,27 @@
 import * as serializers from "../../../..";
 import * as Fern from "../../../../../api";
 import * as core from "../../../../../core";
+import { OrgId } from "../../../commons/types/OrgId";
+import { ApiId } from "../../../commons/types/ApiId";
+import { Sdk } from "../../types/Sdk";
+import { EndpointIdentifier } from "../../types/EndpointIdentifier";
+import { CustomSnippetPayload } from "../../types/CustomSnippetPayload";
 
-export const GetSnippetRequest: core.serialization.Schema<
-    serializers.snippets.GetSnippetRequest.Raw,
-    Fern.snippets.GetSnippetRequest
-> = core.serialization.object({
-    orgId: core.serialization.lazy(async () => (await import("../../../..")).snippets.OrgId).optional(),
-    apiId: core.serialization.lazy(async () => (await import("../../../..")).snippets.ApiId).optional(),
-    sdks: core.serialization
-        .list(core.serialization.lazy(async () => (await import("../../../..")).snippets.Sdk))
-        .optional(),
-    endpoint: core.serialization.lazyObject(async () => (await import("../../../..")).snippets.EndpointIdentifier),
-});
+export const GetSnippetRequest: core.serialization.Schema<serializers.GetSnippetRequest.Raw, Fern.GetSnippetRequest> =
+    core.serialization.object({
+        orgId: OrgId.optional(),
+        apiId: ApiId.optional(),
+        sdks: core.serialization.list(Sdk).optional(),
+        endpoint: EndpointIdentifier,
+        payload: CustomSnippetPayload.optional(),
+    });
 
 export declare namespace GetSnippetRequest {
     interface Raw {
-        orgId?: serializers.snippets.OrgId.Raw | null;
-        apiId?: serializers.snippets.ApiId.Raw | null;
-        sdks?: serializers.snippets.Sdk.Raw[] | null;
-        endpoint: serializers.snippets.EndpointIdentifier.Raw;
+        orgId?: OrgId.Raw | null;
+        apiId?: ApiId.Raw | null;
+        sdks?: Sdk.Raw[] | null;
+        endpoint: EndpointIdentifier.Raw;
+        payload?: CustomSnippetPayload.Raw | null;
     }
 }

@@ -5,6 +5,6 @@
 import * as Fern from "../../..";
 
 export interface EndpointIdentifier {
-    path: Fern.snippets.EndpointPath;
-    method: Fern.snippets.EndpointMethod;
+    path: Fern.EndpointPath;
+    method: Fern.EndpointMethod;
 }

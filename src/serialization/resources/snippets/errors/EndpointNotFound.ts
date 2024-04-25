@@ -5,7 +5,7 @@
 import * as serializers from "../../..";
 import * as core from "../../../../core";
 
-export const EndpointNotFound: core.serialization.Schema<serializers.snippets.EndpointNotFound.Raw, string> =
+export const EndpointNotFound: core.serialization.Schema<serializers.EndpointNotFound.Raw, string> =
     core.serialization.string();
 
 export declare namespace EndpointNotFound {

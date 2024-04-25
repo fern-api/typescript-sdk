@@ -5,7 +5,7 @@
 import * as serializers from "../../..";
 import * as core from "../../../../core";
 
-export const OrgIdRequiredError: core.serialization.Schema<serializers.snippets.OrgIdRequiredError.Raw, string> =
+export const OrgIdRequiredError: core.serialization.Schema<serializers.OrgIdRequiredError.Raw, string> =
     core.serialization.string();
 
 export declare namespace OrgIdRequiredError {

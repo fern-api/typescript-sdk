@@ -5,15 +5,14 @@
 import * as serializers from "../../..";
 import * as Fern from "../../../../api";
 import * as core from "../../../../core";
+import { Snippet } from "./Snippet";
+import { EndpointMethod } from "./EndpointMethod";
 
 export const SnippetsByEndpointMethod: core.serialization.Schema<
-    serializers.snippets.SnippetsByEndpointMethod.Raw,
-    Fern.snippets.SnippetsByEndpointMethod
-> = core.serialization.record(
-    core.serialization.lazy(async () => (await import("../../..")).snippets.EndpointMethod),
-    core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).snippets.Snippet)).optional()
-);
+    serializers.SnippetsByEndpointMethod.Raw,
+    Fern.SnippetsByEndpointMethod
+> = core.serialization.record(EndpointMethod, core.serialization.list(Snippet).optional());
 
 export declare namespace SnippetsByEndpointMethod {
-    type Raw = Record<serializers.snippets.EndpointMethod.Raw, serializers.snippets.Snippet.Raw[] | null | undefined>;
+    type Raw = Record<EndpointMethod.Raw, Snippet.Raw[] | null | undefined>;
 }

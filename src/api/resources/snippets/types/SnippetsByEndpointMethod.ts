@@ -4,4 +4,4 @@
 
 import * as Fern from "../../..";
 
-export type SnippetsByEndpointMethod = Record<Fern.snippets.EndpointMethod, Fern.snippets.Snippet[] | undefined>;
+export type SnippetsByEndpointMethod = Record<Fern.EndpointMethod, Fern.Snippet[] | undefined>;
