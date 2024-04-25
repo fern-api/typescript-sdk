@@ -4,8 +4,8 @@
 
 import * as environments from "./environments";
 import * as core from "./core";
-import { Snippets } from "./api/resources/snippets/client/Client";
 import { Templates } from "./api/resources/templates/client/Client";
+import { SnippetsExtended } from "api/resources/snippets/client/ClientExtended";
 
 export declare namespace FernClient {
     interface Options {
@@ -22,10 +22,10 @@ export declare namespace FernClient {
 export class FernClient {
     constructor(protected readonly _options: FernClient.Options = {}) {}
 
-    protected _snippets: Snippets | undefined;
+    protected _snippets: SnippetsExtended | undefined;
 
-    public get snippets(): Snippets {
-        return (this._snippets ??= new Snippets(this._options));
+    public get snippets(): SnippetsExtended {
+        return (this._snippets ??= new SnippetsExtended(this._options));
     }
 
     protected _templates: Templates | undefined;
