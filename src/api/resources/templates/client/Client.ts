@@ -4,9 +4,9 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as FernInternal from "../../..";
+import * as FernInternal from "../../../index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Templates {
     interface Options {
@@ -25,6 +25,41 @@ export class Templates {
 
     /**
      * Store endpoint snippet for a particular SDK.
+     *
+     * @example
+     *     await fernInternal.templates.register({
+     *         orgId: "string",
+     *         apiId: "string",
+     *         apiDefinitionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         snippet: {
+     *             sdk: {
+     *                 type: "typescript",
+     *                 package: "string",
+     *                 version: "string"
+     *             },
+     *             endpointId: {
+     *                 path: "string",
+     *                 method: FernInternal.EndpointMethod.Put
+     *             },
+     *             snippetTemplate: {
+     *                 type: "v1",
+     *                 clientInstantiation: "string",
+     *                 functionInvocation: {
+     *                     type: "generic",
+     *                     imports: ["string"],
+     *                     isOptional: true,
+     *                     templateString: "string",
+     *                     templateInputs: [{
+     *                             type: "template",
+     *                             value: {
+     *                                 "key": "value"
+     *                             }
+     *                         }],
+     *                     inputDelimiter: "string"
+     *                 }
+     *             }
+     *         }
+     *     })
      */
     public async register(
         request: FernInternal.RegisterSnippetTemplateRequest,
@@ -40,7 +75,7 @@ export class Templates {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/typescript-sdk",
-                "X-Fern-SDK-Version": "0.0.5354",
+                "X-Fern-SDK-Version": "0.0.9",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -77,6 +112,41 @@ export class Templates {
 
     /**
      * Store endpoint snippets for a particular SDK.
+     *
+     * @example
+     *     await fernInternal.templates.registerBatch({
+     *         orgId: "string",
+     *         apiId: "string",
+     *         apiDefinitionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         snippets: [{
+     *                 sdk: {
+     *                     type: "typescript",
+     *                     package: "string",
+     *                     version: "string"
+     *                 },
+     *                 endpointId: {
+     *                     path: "string",
+     *                     method: FernInternal.EndpointMethod.Put
+     *                 },
+     *                 snippetTemplate: {
+     *                     type: "v1",
+     *                     clientInstantiation: "string",
+     *                     functionInvocation: {
+     *                         type: "generic",
+     *                         imports: ["string"],
+     *                         isOptional: true,
+     *                         templateString: "string",
+     *                         templateInputs: [{
+     *                                 type: "template",
+     *                                 value: {
+     *                                     "key": "value"
+     *                                 }
+     *                             }],
+     *                         inputDelimiter: "string"
+     *                     }
+     *                 }
+     *             }]
+     *     })
      */
     public async registerBatch(
         request: FernInternal.RegisterSnippetTemplateBatchRequest,
@@ -92,7 +162,7 @@ export class Templates {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/typescript-sdk",
-                "X-Fern-SDK-Version": "0.0.5354",
+                "X-Fern-SDK-Version": "0.0.9",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -131,6 +201,21 @@ export class Templates {
      * Get the endpoint's snippet template for a particular SDK.
      * @throws {@link FernInternal.UnauthorizedError}
      * @throws {@link FernInternal.SnippetNotFound}
+     *
+     * @example
+     *     await fernInternal.templates.get({
+     *         orgId: "string",
+     *         apiId: "string",
+     *         sdk: {
+     *             type: "typescript",
+     *             package: "string",
+     *             version: "string"
+     *         },
+     *         endpointId: {
+     *             path: "string",
+     *             method: FernInternal.EndpointMethod.Put
+     *         }
+     *     })
      */
     public async get(
         request: FernInternal.GetSnippetTemplate,
@@ -146,7 +231,7 @@ export class Templates {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/typescript-sdk",
-                "X-Fern-SDK-Version": "0.0.5354",
+                "X-Fern-SDK-Version": "0.0.9",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -188,7 +273,7 @@ export class Templates {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;
