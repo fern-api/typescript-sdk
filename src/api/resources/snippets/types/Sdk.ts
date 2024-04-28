@@ -4,26 +4,26 @@
 
 import * as Fern from "../../..";
 
-export type Sdk =
-    | Fern.snippets.Sdk.Typescript
-    | Fern.snippets.Sdk.Python
-    | Fern.snippets.Sdk.Go
-    | Fern.snippets.Sdk.Java;
+export type Sdk = Fern.Sdk.Typescript | Fern.Sdk.Python | Fern.Sdk.Go | Fern.Sdk.Ruby | Fern.Sdk.Java;
 
 export declare namespace Sdk {
-    interface Typescript extends Fern.snippets.TypeScriptSdk {
+    interface Typescript extends Fern.TypeScriptSdk {
         type: "typescript";
     }
 
-    interface Python extends Fern.snippets.PythonSdk {
+    interface Python extends Fern.PythonSdk {
         type: "python";
     }
 
-    interface Go extends Fern.snippets.GoSdk {
+    interface Go extends Fern.GoSdk {
         type: "go";
     }
 
-    interface Java extends Fern.snippets.JavaSdk {
+    interface Ruby extends Fern.RubySdk {
+        type: "ruby";
+    }
+
+    interface Java extends Fern.JavaSdk {
         type: "java";
     }
 }

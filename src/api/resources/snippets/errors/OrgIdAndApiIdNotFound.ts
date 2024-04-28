@@ -8,7 +8,7 @@ export class OrgIdAndApiIdNotFound extends errors.FernError {
     constructor(body: string) {
         super({
             message: "OrgIdAndApiIdNotFound",
-            statusCode: 400,
+            statusCode: 404,
             body: body,
         });
         Object.setPrototypeOf(this, OrgIdAndApiIdNotFound.prototype);
