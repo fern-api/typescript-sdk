@@ -1,0 +1,89 @@
+default-group: local
+
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-express
+        version: 0.9.9
+        output:
+          location: local-file-system
+          path: ../../../servers/fdr/src/api/generated
+        config:
+          noSerdeLayer: true
+          outputEsm: true
+          # extraDevDependencies:
+          #   "@types/mime": "3.0.4"
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.12.8-rc0
+        output:
+          location: local-file-system
+          path: ../../../packages/fdr-sdk/src/client/generated
+        config:
+          noSerdeLayer: true
+          outputSourceFiles: true
+          neverThrowErrors: true
+          timeoutInSeconds: infinity
+          outputEsm: true
+          extraDevDependencies:
+            "@types/mime": "3.0.4"
+
+  internal-snippets-sdks:
+    audiences:
+      - snippets
+    generators:
+      # Internal, unadulterated for the use of the APIs
+      - name: fernapi/fern-python-sdk
+        version: 1.2.0-rc1
+        output:
+          location: pypi
+          url: pypi.buildwithfern.com
+          package-name: "fern-fern-fdr-sdk"
+        config:
+          package_name: "fdr"
+          pydantic_config:
+            include_union_utils: true
+          client:
+            class_name: FdrClient
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.12.8-rc0
+        output:
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/snippet-sdk"
+        config:
+          namespaceExport: FdrSnippetTemplate
+          includeUtilsOnUnionMembers: true
+
+  external-sdks:
+    audiences:
+      - external
+      - snippets
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.12.8-rc0
+        output:
+          location: npm
+          package-name: "@fern/typescript-sdk"
+          # token: ${NPM_TOKEN}
+        github:
+          repository: fern-api/fern-typescript
+          mode: pull-request
+          license: MIT
+        config:
+          noSerdeLayer: true
+          namespaceExport: Fern
+          includeApiReference: true
+
+  fiddle:
+    audiences:
+      - fiddle
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 0.5.10-rc12-1-g4718c24
+        output:
+          location: maven
+          url: maven.buildwithfern.com
+          coordinate: com.fern.fern:fern-definition-registry
+        config:
+          wrapped-aliases: true
+          enable-forward-compatible-enums: true

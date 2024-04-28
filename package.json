@@ -1,15 +1,16 @@
 {
-    "name": "@fern-api/node-sdk",
-    "version": "0.2.6",
+    "name": "@fern/typescript-sdk",
+    "version": "0.0.5351",
     "private": false,
-    "repository": "https://github.com/fern-api/node-sdk",
+    "repository": "https://github.com/fern-api/fern-typescript",
     "license": "MIT",
     "main": "./index.js",
     "types": "./index.d.ts",
     "scripts": {
         "format": "prettier --write 'src/**/*.ts'",
         "build": "tsc",
-        "prepack": "cp -rv dist/. ."
+        "prepack": "cp -rv dist/. .",
+        "test": "jest"
     },
     "dependencies": {
         "@fern-api/template-resolver": "^0.0.1",

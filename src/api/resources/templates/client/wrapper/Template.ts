@@ -1,12 +1,12 @@
 import * as Fern from "../../..";
 import * as TemplateResolver from "@fern-api/template-resolver"
 
-export class Template implements Fern.snippets.EndpointSnippetTemplate {
+export class Template implements Fern.templates.EndpointSnippetTemplate {
     private endpointSnippetTemplate: Fern.EndpointSnippetTemplate;
     constructor(
         public readonly sdk: Fern.snippets.Sdk,
         public readonly endpointId: Fern.snippets.EndpointIdentifier,
-        public readonly snippetTemplate: Fern.snippets.VersionedSnippetTemplate
+        public readonly snippetTemplate: Fern.templates.VersionedSnippetTemplate
     ) {
         this.endpointSnippetTemplate = {sdk, endpointId, snippetTemplate};
     }
@@ -20,7 +20,7 @@ export class Template implements Fern.snippets.EndpointSnippetTemplate {
         return _innerResolver.resolve();
     }
 
-    public static from(template: Fern.snippets.EndpointSnippetTemplate): Template {
+    public static from(template: Fern.templates.EndpointSnippetTemplate): Template {
         return new Template(template.sdk, template.endpointId, template.snippetTemplate);
     }
 }

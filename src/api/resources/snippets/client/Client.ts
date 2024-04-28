@@ -5,14 +5,13 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as Fern from "../../..";
-import * as serializers from "../../../../serialization";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors";
 
 export declare namespace Snippets {
     interface Options {
         environment?: core.Supplier<environments.FernEnvironment | string>;
-        token: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
     }
 
     interface RequestOptions {
@@ -22,146 +21,75 @@ export declare namespace Snippets {
 }
 
 export class Snippets {
-    constructor(protected readonly _options: Snippets.Options) {}
+    constructor(protected readonly _options: Snippets.Options = {}) {}
 
     /**
      * Get snippet by endpoint method and path
-     * @throws {@link Fern.snippets.UnauthorizedError}
-     * @throws {@link Fern.snippets.UserNotInOrgError}
-     * @throws {@link Fern.snippets.UnavailableError}
-     * @throws {@link Fern.snippets.ApiIdRequiredError}
-     * @throws {@link Fern.snippets.OrgIdRequiredError}
-     * @throws {@link Fern.snippets.OrgIdAndApiIdNotFound}
-     * @throws {@link Fern.snippets.OrgIdNotFound}
-     * @throws {@link Fern.snippets.ApiIdNotFound}
-     * @throws {@link Fern.snippets.EndpointNotFound}
-     * @throws {@link Fern.snippets.SdkNotFound}
+     * @throws {@link Fern.UnauthorizedError}
+     * @throws {@link Fern.UserNotInOrgError}
+     * @throws {@link Fern.UnavailableError}
+     * @throws {@link Fern.ApiIdRequiredError}
+     * @throws {@link Fern.OrgIdRequiredError}
+     * @throws {@link Fern.OrgIdAndApiIdNotFound}
+     * @throws {@link Fern.OrgIdNotFound}
+     * @throws {@link Fern.EndpointNotFound}
+     * @throws {@link Fern.SdkNotFound}
      *
      * @example
      *     await fern.snippets.get({
      *         endpoint: {
-     *             method: Fern.snippets.EndpointMethod.Get,
+     *             method: Fern.EndpointMethod.Get,
      *             path: "/v1/search"
      *         }
      *     })
      */
     public async get(
-        request: Fern.snippets.GetSnippetRequest,
+        request: Fern.GetSnippetRequest,
         requestOptions?: Snippets.RequestOptions
-    ): Promise<Fern.snippets.Snippet[]> {
+    ): Promise<Fern.Snippet[]> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernEnvironment.Dev,
                 "/snippets"
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern-api/node-sdk",
-                "X-Fern-SDK-Version": "0.2.6",
+                "X-Fern-SDK-Name": "@fern/typescript-sdk",
+                "X-Fern-SDK-Version": "0.0.5351",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.snippets.GetSnippetRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
+            body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.snippets.get.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return _response.body as Fern.Snippet[];
         }
 
         if (_response.error.reason === "status-code") {
             switch ((_response.error.body as any)?.["error"]) {
                 case "UnauthorizedError":
-                    throw new Fern.snippets.UnauthorizedError(
-                        await serializers.snippets.UnauthorizedError.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Fern.UnauthorizedError(_response.error.body as string);
                 case "UserNotInOrgError":
-                    throw new Fern.snippets.UserNotInOrgError();
+                    throw new Fern.UserNotInOrgError();
                 case "UnavailableError":
-                    throw new Fern.snippets.UnavailableError(
-                        await serializers.snippets.UnavailableError.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Fern.UnavailableError(_response.error.body as string);
                 case "ApiIdRequiredError":
-                    throw new Fern.snippets.ApiIdRequiredError(
-                        await serializers.snippets.ApiIdRequiredError.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Fern.ApiIdRequiredError(_response.error.body as string);
                 case "OrgIdRequiredError":
-                    throw new Fern.snippets.OrgIdRequiredError(
-                        await serializers.snippets.OrgIdRequiredError.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Fern.OrgIdRequiredError(_response.error.body as string);
                 case "OrgIdAndApiIdNotFound":
-                    throw new Fern.snippets.OrgIdAndApiIdNotFound(
-                        await serializers.snippets.OrgIdAndApiIdNotFound.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Fern.OrgIdAndApiIdNotFound(_response.error.body as string);
                 case "OrgIdNotFound":
-                    throw new Fern.snippets.OrgIdNotFound(
-                        await serializers.snippets.OrgIdNotFound.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
-                case "ApiIdNotFound":
-                    throw new Fern.snippets.ApiIdNotFound(
-                        await serializers.snippets.ApiIdNotFound.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Fern.OrgIdNotFound(_response.error.body as string);
                 case "EndpointNotFound":
-                    throw new Fern.snippets.EndpointNotFound(
-                        await serializers.snippets.EndpointNotFound.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Fern.EndpointNotFound(_response.error.body as string);
                 case "SDKNotFound":
-                    throw new Fern.snippets.SdkNotFound(
-                        await serializers.snippets.SdkNotFound.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Fern.SdkNotFound(_response.error.body as string);
                 default:
                     throw new errors.FernError({
                         statusCode: _response.error.statusCode,
@@ -186,16 +114,15 @@ export class Snippets {
     }
 
     /**
-     * @throws {@link Fern.snippets.UnauthorizedError}
-     * @throws {@link Fern.snippets.UserNotInOrgError}
-     * @throws {@link Fern.snippets.UnavailableError}
-     * @throws {@link Fern.snippets.InvalidPageError}
-     * @throws {@link Fern.snippets.ApiIdRequiredError}
-     * @throws {@link Fern.snippets.OrgIdRequiredError}
-     * @throws {@link Fern.snippets.OrgIdAndApiIdNotFound}
-     * @throws {@link Fern.snippets.OrgIdNotFound}
-     * @throws {@link Fern.snippets.ApiIdNotFound}
-     * @throws {@link Fern.snippets.SdkNotFound}
+     * @throws {@link Fern.UnauthorizedError}
+     * @throws {@link Fern.UserNotInOrgError}
+     * @throws {@link Fern.UnavailableError}
+     * @throws {@link Fern.InvalidPageError}
+     * @throws {@link Fern.ApiIdRequiredError}
+     * @throws {@link Fern.OrgIdRequiredError}
+     * @throws {@link Fern.OrgIdAndApiIdNotFound}
+     * @throws {@link Fern.OrgIdNotFound}
+     * @throws {@link Fern.SdkNotFound}
      *
      * @example
      *     await fern.snippets.load({
@@ -210,129 +137,59 @@ export class Snippets {
      *     })
      */
     public async load(
-        request: Fern.snippets.ListSnippetsRequest = {},
+        request: Fern.ListSnippetsRequest = {},
         requestOptions?: Snippets.RequestOptions
-    ): Promise<Fern.snippets.SnippetsPage> {
+    ): Promise<Fern.SnippetsPage> {
         const { page, ..._body } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (page != null) {
             _queryParams["page"] = page.toString();
         }
 
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernEnvironment.Dev,
                 "/snippets/load"
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern-api/node-sdk",
-                "X-Fern-SDK-Version": "0.2.6",
+                "X-Fern-SDK-Name": "@fern/typescript-sdk",
+                "X-Fern-SDK-Version": "0.0.5351",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            body: await serializers.snippets.ListSnippetsRequest.jsonOrThrow(_body, {
-                unrecognizedObjectKeys: "strip",
-            }),
+            body: _body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.snippets.SnippetsPage.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return _response.body as Fern.SnippetsPage;
         }
 
         if (_response.error.reason === "status-code") {
             switch ((_response.error.body as any)?.["error"]) {
                 case "UnauthorizedError":
-                    throw new Fern.snippets.UnauthorizedError(
-                        await serializers.snippets.UnauthorizedError.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Fern.UnauthorizedError(_response.error.body as string);
                 case "UserNotInOrgError":
-                    throw new Fern.snippets.UserNotInOrgError();
+                    throw new Fern.UserNotInOrgError();
                 case "UnavailableError":
-                    throw new Fern.snippets.UnavailableError(
-                        await serializers.snippets.UnavailableError.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Fern.UnavailableError(_response.error.body as string);
                 case "InvalidPageError":
-                    throw new Fern.snippets.InvalidPageError(
-                        await serializers.snippets.InvalidPageError.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Fern.InvalidPageError(_response.error.body as string);
                 case "ApiIdRequiredError":
-                    throw new Fern.snippets.ApiIdRequiredError(
-                        await serializers.snippets.ApiIdRequiredError.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Fern.ApiIdRequiredError(_response.error.body as string);
                 case "OrgIdRequiredError":
-                    throw new Fern.snippets.OrgIdRequiredError(
-                        await serializers.snippets.OrgIdRequiredError.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Fern.OrgIdRequiredError(_response.error.body as string);
                 case "OrgIdAndApiIdNotFound":
-                    throw new Fern.snippets.OrgIdAndApiIdNotFound(
-                        await serializers.snippets.OrgIdAndApiIdNotFound.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Fern.OrgIdAndApiIdNotFound(_response.error.body as string);
                 case "OrgIdNotFound":
-                    throw new Fern.snippets.OrgIdNotFound(
-                        await serializers.snippets.OrgIdNotFound.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
-                case "ApiIdNotFound":
-                    throw new Fern.snippets.ApiIdNotFound(
-                        await serializers.snippets.ApiIdNotFound.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Fern.OrgIdNotFound(_response.error.body as string);
                 case "SDKNotFound":
-                    throw new Fern.snippets.SdkNotFound(
-                        await serializers.snippets.SdkNotFound.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Fern.SdkNotFound(_response.error.body as string);
                 default:
                     throw new errors.FernError({
                         statusCode: _response.error.statusCode,
@@ -357,6 +214,11 @@ export class Snippets {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this._options.token)}`;
+        const bearer = await core.Supplier.get(this._options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }
