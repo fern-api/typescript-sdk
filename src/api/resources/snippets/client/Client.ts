@@ -4,13 +4,13 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Fern from "../../..";
+import * as FernInternal from "../../..";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors";
 
 export declare namespace Snippets {
     interface Options {
-        environment?: core.Supplier<environments.FernEnvironment | string>;
+        environment?: core.Supplier<environments.FernInternalEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
@@ -25,31 +25,31 @@ export class Snippets {
 
     /**
      * Get snippet by endpoint method and path
-     * @throws {@link Fern.UnauthorizedError}
-     * @throws {@link Fern.UserNotInOrgError}
-     * @throws {@link Fern.UnavailableError}
-     * @throws {@link Fern.ApiIdRequiredError}
-     * @throws {@link Fern.OrgIdRequiredError}
-     * @throws {@link Fern.OrgIdAndApiIdNotFound}
-     * @throws {@link Fern.OrgIdNotFound}
-     * @throws {@link Fern.EndpointNotFound}
-     * @throws {@link Fern.SdkNotFound}
+     * @throws {@link FernInternal.UnauthorizedError}
+     * @throws {@link FernInternal.UserNotInOrgError}
+     * @throws {@link FernInternal.UnavailableError}
+     * @throws {@link FernInternal.ApiIdRequiredError}
+     * @throws {@link FernInternal.OrgIdRequiredError}
+     * @throws {@link FernInternal.OrgIdAndApiIdNotFound}
+     * @throws {@link FernInternal.OrgIdNotFound}
+     * @throws {@link FernInternal.EndpointNotFound}
+     * @throws {@link FernInternal.SdkNotFound}
      *
      * @example
-     *     await fern.snippets.get({
+     *     await fernInternal.snippets.get({
      *         endpoint: {
-     *             method: Fern.EndpointMethod.Get,
+     *             method: FernInternal.EndpointMethod.Get,
      *             path: "/v1/search"
      *         }
      *     })
      */
     public async get(
-        request: Fern.GetSnippetRequest,
+        request: FernInternal.GetSnippetRequest,
         requestOptions?: Snippets.RequestOptions
-    ): Promise<Fern.Snippet[]> {
+    ): Promise<FernInternal.Snippet[]> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernInternalEnvironment.Dev,
                 "/snippets"
             ),
             method: "POST",
@@ -57,7 +57,7 @@ export class Snippets {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/typescript-sdk",
-                "X-Fern-SDK-Version": "0.0.5351",
+                "X-Fern-SDK-Version": "0.0.5354",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -67,31 +67,31 @@ export class Snippets {
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return _response.body as Fern.Snippet[];
+            return _response.body as FernInternal.Snippet[];
         }
 
         if (_response.error.reason === "status-code") {
             switch ((_response.error.body as any)?.["error"]) {
                 case "UnauthorizedError":
-                    throw new Fern.UnauthorizedError(_response.error.body as string);
+                    throw new FernInternal.UnauthorizedError(_response.error.body as string);
                 case "UserNotInOrgError":
-                    throw new Fern.UserNotInOrgError();
+                    throw new FernInternal.UserNotInOrgError();
                 case "UnavailableError":
-                    throw new Fern.UnavailableError(_response.error.body as string);
+                    throw new FernInternal.UnavailableError(_response.error.body as string);
                 case "ApiIdRequiredError":
-                    throw new Fern.ApiIdRequiredError(_response.error.body as string);
+                    throw new FernInternal.ApiIdRequiredError(_response.error.body as string);
                 case "OrgIdRequiredError":
-                    throw new Fern.OrgIdRequiredError(_response.error.body as string);
+                    throw new FernInternal.OrgIdRequiredError(_response.error.body as string);
                 case "OrgIdAndApiIdNotFound":
-                    throw new Fern.OrgIdAndApiIdNotFound(_response.error.body as string);
+                    throw new FernInternal.OrgIdAndApiIdNotFound(_response.error.body as string);
                 case "OrgIdNotFound":
-                    throw new Fern.OrgIdNotFound(_response.error.body as string);
+                    throw new FernInternal.OrgIdNotFound(_response.error.body as string);
                 case "EndpointNotFound":
-                    throw new Fern.EndpointNotFound(_response.error.body as string);
+                    throw new FernInternal.EndpointNotFound(_response.error.body as string);
                 case "SDKNotFound":
-                    throw new Fern.SdkNotFound(_response.error.body as string);
+                    throw new FernInternal.SdkNotFound(_response.error.body as string);
                 default:
-                    throw new errors.FernError({
+                    throw new errors.FernInternalError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                     });
@@ -100,32 +100,32 @@ export class Snippets {
 
         switch (_response.error.reason) {
             case "non-json":
-                throw new errors.FernError({
+                throw new errors.FernInternalError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.FernTimeoutError();
+                throw new errors.FernInternalTimeoutError();
             case "unknown":
-                throw new errors.FernError({
+                throw new errors.FernInternalError({
                     message: _response.error.errorMessage,
                 });
         }
     }
 
     /**
-     * @throws {@link Fern.UnauthorizedError}
-     * @throws {@link Fern.UserNotInOrgError}
-     * @throws {@link Fern.UnavailableError}
-     * @throws {@link Fern.InvalidPageError}
-     * @throws {@link Fern.ApiIdRequiredError}
-     * @throws {@link Fern.OrgIdRequiredError}
-     * @throws {@link Fern.OrgIdAndApiIdNotFound}
-     * @throws {@link Fern.OrgIdNotFound}
-     * @throws {@link Fern.SdkNotFound}
+     * @throws {@link FernInternal.UnauthorizedError}
+     * @throws {@link FernInternal.UserNotInOrgError}
+     * @throws {@link FernInternal.UnavailableError}
+     * @throws {@link FernInternal.InvalidPageError}
+     * @throws {@link FernInternal.ApiIdRequiredError}
+     * @throws {@link FernInternal.OrgIdRequiredError}
+     * @throws {@link FernInternal.OrgIdAndApiIdNotFound}
+     * @throws {@link FernInternal.OrgIdNotFound}
+     * @throws {@link FernInternal.SdkNotFound}
      *
      * @example
-     *     await fern.snippets.load({
+     *     await fernInternal.snippets.load({
      *         page: 1,
      *         orgId: "vellum",
      *         apiId: "vellum-ai",
@@ -137,9 +137,9 @@ export class Snippets {
      *     })
      */
     public async load(
-        request: Fern.ListSnippetsRequest = {},
+        request: FernInternal.ListSnippetsRequest = {},
         requestOptions?: Snippets.RequestOptions
-    ): Promise<Fern.SnippetsPage> {
+    ): Promise<FernInternal.SnippetsPage> {
         const { page, ..._body } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (page != null) {
@@ -148,7 +148,7 @@ export class Snippets {
 
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernInternalEnvironment.Dev,
                 "/snippets/load"
             ),
             method: "POST",
@@ -156,7 +156,7 @@ export class Snippets {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/typescript-sdk",
-                "X-Fern-SDK-Version": "0.0.5351",
+                "X-Fern-SDK-Version": "0.0.5354",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -167,31 +167,31 @@ export class Snippets {
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return _response.body as Fern.SnippetsPage;
+            return _response.body as FernInternal.SnippetsPage;
         }
 
         if (_response.error.reason === "status-code") {
             switch ((_response.error.body as any)?.["error"]) {
                 case "UnauthorizedError":
-                    throw new Fern.UnauthorizedError(_response.error.body as string);
+                    throw new FernInternal.UnauthorizedError(_response.error.body as string);
                 case "UserNotInOrgError":
-                    throw new Fern.UserNotInOrgError();
+                    throw new FernInternal.UserNotInOrgError();
                 case "UnavailableError":
-                    throw new Fern.UnavailableError(_response.error.body as string);
+                    throw new FernInternal.UnavailableError(_response.error.body as string);
                 case "InvalidPageError":
-                    throw new Fern.InvalidPageError(_response.error.body as string);
+                    throw new FernInternal.InvalidPageError(_response.error.body as string);
                 case "ApiIdRequiredError":
-                    throw new Fern.ApiIdRequiredError(_response.error.body as string);
+                    throw new FernInternal.ApiIdRequiredError(_response.error.body as string);
                 case "OrgIdRequiredError":
-                    throw new Fern.OrgIdRequiredError(_response.error.body as string);
+                    throw new FernInternal.OrgIdRequiredError(_response.error.body as string);
                 case "OrgIdAndApiIdNotFound":
-                    throw new Fern.OrgIdAndApiIdNotFound(_response.error.body as string);
+                    throw new FernInternal.OrgIdAndApiIdNotFound(_response.error.body as string);
                 case "OrgIdNotFound":
-                    throw new Fern.OrgIdNotFound(_response.error.body as string);
+                    throw new FernInternal.OrgIdNotFound(_response.error.body as string);
                 case "SDKNotFound":
-                    throw new Fern.SdkNotFound(_response.error.body as string);
+                    throw new FernInternal.SdkNotFound(_response.error.body as string);
                 default:
-                    throw new errors.FernError({
+                    throw new errors.FernInternalError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                     });
@@ -200,14 +200,14 @@ export class Snippets {
 
         switch (_response.error.reason) {
             case "non-json":
-                throw new errors.FernError({
+                throw new errors.FernInternalError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.FernTimeoutError();
+                throw new errors.FernInternalTimeoutError();
             case "unknown":
-                throw new errors.FernError({
+                throw new errors.FernInternalError({
                     message: _response.error.errorMessage,
                 });
         }

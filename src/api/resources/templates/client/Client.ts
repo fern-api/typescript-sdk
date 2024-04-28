@@ -4,13 +4,13 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Fern from "../../..";
+import * as FernInternal from "../../..";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors";
 
 export declare namespace Templates {
     interface Options {
-        environment?: core.Supplier<environments.FernEnvironment | string>;
+        environment?: core.Supplier<environments.FernInternalEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
@@ -27,12 +27,12 @@ export class Templates {
      * Store endpoint snippet for a particular SDK.
      */
     public async register(
-        request: Fern.RegisterSnippetTemplateRequest,
+        request: FernInternal.RegisterSnippetTemplateRequest,
         requestOptions?: Templates.RequestOptions
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernInternalEnvironment.Dev,
                 "/snippet-template/register"
             ),
             method: "POST",
@@ -40,7 +40,7 @@ export class Templates {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/typescript-sdk",
-                "X-Fern-SDK-Version": "0.0.5351",
+                "X-Fern-SDK-Version": "0.0.5354",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -54,7 +54,7 @@ export class Templates {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.FernError({
+            throw new errors.FernInternalError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
             });
@@ -62,14 +62,14 @@ export class Templates {
 
         switch (_response.error.reason) {
             case "non-json":
-                throw new errors.FernError({
+                throw new errors.FernInternalError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.FernTimeoutError();
+                throw new errors.FernInternalTimeoutError();
             case "unknown":
-                throw new errors.FernError({
+                throw new errors.FernInternalError({
                     message: _response.error.errorMessage,
                 });
         }
@@ -79,12 +79,12 @@ export class Templates {
      * Store endpoint snippets for a particular SDK.
      */
     public async registerBatch(
-        request: Fern.RegisterSnippetTemplateBatchRequest,
+        request: FernInternal.RegisterSnippetTemplateBatchRequest,
         requestOptions?: Templates.RequestOptions
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernInternalEnvironment.Dev,
                 "/snippet-template/register/batch"
             ),
             method: "POST",
@@ -92,7 +92,7 @@ export class Templates {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/typescript-sdk",
-                "X-Fern-SDK-Version": "0.0.5351",
+                "X-Fern-SDK-Version": "0.0.5354",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -106,7 +106,7 @@ export class Templates {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.FernError({
+            throw new errors.FernInternalError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
             });
@@ -114,14 +114,14 @@ export class Templates {
 
         switch (_response.error.reason) {
             case "non-json":
-                throw new errors.FernError({
+                throw new errors.FernInternalError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.FernTimeoutError();
+                throw new errors.FernInternalTimeoutError();
             case "unknown":
-                throw new errors.FernError({
+                throw new errors.FernInternalError({
                     message: _response.error.errorMessage,
                 });
         }
@@ -129,16 +129,16 @@ export class Templates {
 
     /**
      * Get the endpoint's snippet template for a particular SDK.
-     * @throws {@link Fern.UnauthorizedError}
-     * @throws {@link Fern.SnippetNotFound}
+     * @throws {@link FernInternal.UnauthorizedError}
+     * @throws {@link FernInternal.SnippetNotFound}
      */
     public async get(
-        request: Fern.GetSnippetTemplate,
+        request: FernInternal.GetSnippetTemplate,
         requestOptions?: Templates.RequestOptions
-    ): Promise<Fern.EndpointSnippetTemplate> {
+    ): Promise<FernInternal.EndpointSnippetTemplate> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernInternalEnvironment.Dev,
                 "/snippet-template/get"
             ),
             method: "POST",
@@ -146,7 +146,7 @@ export class Templates {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/typescript-sdk",
-                "X-Fern-SDK-Version": "0.0.5351",
+                "X-Fern-SDK-Version": "0.0.5354",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -156,17 +156,17 @@ export class Templates {
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return _response.body as Fern.EndpointSnippetTemplate;
+            return _response.body as FernInternal.EndpointSnippetTemplate;
         }
 
         if (_response.error.reason === "status-code") {
             switch ((_response.error.body as any)?.["error"]) {
                 case "UnauthorizedError":
-                    throw new Fern.UnauthorizedError(_response.error.body as string);
+                    throw new FernInternal.UnauthorizedError(_response.error.body as string);
                 case "SnippetNotFound":
-                    throw new Fern.SnippetNotFound(_response.error.body as string);
+                    throw new FernInternal.SnippetNotFound(_response.error.body as string);
                 default:
-                    throw new errors.FernError({
+                    throw new errors.FernInternalError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                     });
@@ -175,14 +175,14 @@ export class Templates {
 
         switch (_response.error.reason) {
             case "non-json":
-                throw new errors.FernError({
+                throw new errors.FernInternalError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.FernTimeoutError();
+                throw new errors.FernInternalTimeoutError();
             case "unknown":
-                throw new errors.FernError({
+                throw new errors.FernInternalError({
                     message: _response.error.errorMessage,
                 });
         }

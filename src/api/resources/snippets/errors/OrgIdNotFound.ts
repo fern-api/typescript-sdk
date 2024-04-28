@@ -4,7 +4,7 @@
 
 import * as errors from "../../../../errors";
 
-export class OrgIdNotFound extends errors.FernError {
+export class OrgIdNotFound extends errors.FernInternalError {
     constructor(body: string) {
         super({
             message: "OrgIdNotFound",

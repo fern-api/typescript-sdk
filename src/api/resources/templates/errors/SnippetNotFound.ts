@@ -4,7 +4,7 @@
 
 import * as errors from "../../../../errors";
 
-export class SnippetNotFound extends errors.FernError {
+export class SnippetNotFound extends errors.FernInternalError {
     constructor(body: string) {
         super({
             message: "SnippetNotFound",

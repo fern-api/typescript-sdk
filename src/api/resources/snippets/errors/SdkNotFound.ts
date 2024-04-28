@@ -4,7 +4,7 @@
 
 import * as errors from "../../../../errors";
 
-export class SdkNotFound extends errors.FernError {
+export class SdkNotFound extends errors.FernInternalError {
     constructor(body: string) {
         super({
             message: "SDKNotFound",

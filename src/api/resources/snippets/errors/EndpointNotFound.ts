@@ -4,7 +4,7 @@
 
 import * as errors from "../../../../errors";
 
-export class EndpointNotFound extends errors.FernError {
+export class EndpointNotFound extends errors.FernInternalError {
     constructor(body: string) {
         super({
             message: "EndpointNotFound",

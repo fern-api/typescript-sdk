@@ -1,4 +1,4 @@
-export * as Fern from "./api";
-export { FernClient } from "./Client";
-export { FernEnvironment } from "./environments";
-export { FernError, FernTimeoutError } from "./errors";
+export * as FernInternal from "./api";
+export { FernInternalClient } from "./Client";
+export { FernInternalEnvironment } from "./environments";
+export { FernInternalError, FernInternalTimeoutError } from "./errors";

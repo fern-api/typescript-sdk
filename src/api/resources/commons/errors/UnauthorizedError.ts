@@ -4,7 +4,7 @@
 
 import * as errors from "../../../../errors";
 
-export class UnauthorizedError extends errors.FernError {
+export class UnauthorizedError extends errors.FernInternalError {
     constructor(body: string) {
         super({
             message: "UnauthorizedError",
