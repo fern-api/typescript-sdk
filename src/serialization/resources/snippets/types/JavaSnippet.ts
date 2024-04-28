@@ -5,19 +5,18 @@
 import * as serializers from "../../..";
 import * as Fern from "../../../../api";
 import * as core from "../../../../core";
+import { JavaSdk } from "./JavaSdk";
 
-export const JavaSnippet: core.serialization.ObjectSchema<
-    serializers.snippets.JavaSnippet.Raw,
-    Fern.snippets.JavaSnippet
-> = core.serialization.object({
-    sdk: core.serialization.lazyObject(async () => (await import("../../..")).snippets.JavaSdk),
-    asyncClient: core.serialization.property("async_client", core.serialization.string()),
-    syncClient: core.serialization.property("sync_client", core.serialization.string()),
-});
+export const JavaSnippet: core.serialization.ObjectSchema<serializers.JavaSnippet.Raw, Fern.JavaSnippet> =
+    core.serialization.object({
+        sdk: JavaSdk,
+        asyncClient: core.serialization.property("async_client", core.serialization.string()),
+        syncClient: core.serialization.property("sync_client", core.serialization.string()),
+    });
 
 export declare namespace JavaSnippet {
     interface Raw {
-        sdk: serializers.snippets.JavaSdk.Raw;
+        sdk: JavaSdk.Raw;
         async_client: string;
         sync_client: string;
     }

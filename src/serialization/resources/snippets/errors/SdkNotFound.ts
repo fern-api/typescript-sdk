@@ -5,8 +5,7 @@
 import * as serializers from "../../..";
 import * as core from "../../../../core";
 
-export const SdkNotFound: core.serialization.Schema<serializers.snippets.SdkNotFound.Raw, string> =
-    core.serialization.string();
+export const SdkNotFound: core.serialization.Schema<serializers.SdkNotFound.Raw, string> = core.serialization.string();
 
 export declare namespace SdkNotFound {
     type Raw = string;

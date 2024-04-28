@@ -6,10 +6,8 @@ import * as serializers from "../../..";
 import * as Fern from "../../../../api";
 import * as core from "../../../../core";
 
-export const EndpointMethod: core.serialization.Schema<
-    serializers.snippets.EndpointMethod.Raw,
-    Fern.snippets.EndpointMethod
-> = core.serialization.enum_(["PUT", "POST", "GET", "PATCH", "DELETE"]);
+export const EndpointMethod: core.serialization.Schema<serializers.EndpointMethod.Raw, Fern.EndpointMethod> =
+    core.serialization.enum_(["PUT", "POST", "GET", "PATCH", "DELETE"]);
 
 export declare namespace EndpointMethod {
     type Raw = "PUT" | "POST" | "GET" | "PATCH" | "DELETE";

@@ -24,16 +24,16 @@ export interface ListSnippetsRequest {
      * you must specify an organization ID.
      *
      */
-    orgId?: Fern.snippets.OrgId;
+    orgId?: Fern.OrgId;
     /**
      * If you have more than one API, you must specify its ID.
      *
      */
-    apiId?: Fern.snippets.ApiId;
+    apiId?: Fern.ApiId;
     /**
      * The SDKs for which to load snippets. If unspecified,
      * snippets for the latest published SDKs will be returned.
      *
      */
-    sdks?: Fern.snippets.Sdk[];
+    sdks?: Fern.Sdk[];
 }

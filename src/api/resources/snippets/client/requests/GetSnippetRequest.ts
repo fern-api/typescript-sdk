@@ -8,7 +8,7 @@ import * as Fern from "../../../..";
  * @example
  *     {
  *         endpoint: {
- *             method: Fern.snippets.EndpointMethod.Get,
+ *             method: Fern.EndpointMethod.Get,
  *             path: "/v1/search"
  *         }
  *     }
@@ -19,17 +19,23 @@ export interface GetSnippetRequest {
      * you must specify an organization ID.
      *
      */
-    orgId?: Fern.snippets.OrgId;
+    orgId?: Fern.OrgId;
     /**
      * If you have more than one API, you must specify its ID.
      *
      */
-    apiId?: Fern.snippets.ApiId;
+    apiId?: Fern.ApiId;
     /**
      * The SDKs for which to load snippets. If unspecified,
      * snippets for the latest published SDKs will be returned.
      *
      */
-    sdks?: Fern.snippets.Sdk[];
-    endpoint: Fern.snippets.EndpointIdentifier;
+    sdks?: Fern.Sdk[];
+    endpoint: Fern.EndpointIdentifier;
+    /**
+     * The JSON payload to be used as the input for the code snippet. This should just be thought of as the
+     * request body you'd be sending to the endpoint as a cURL. If not specified then the default payload will be used.
+     *
+     */
+    payload?: Fern.CustomSnippetPayload;
 }

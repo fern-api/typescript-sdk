@@ -6,11 +6,10 @@ import * as serializers from "../../..";
 import * as Fern from "../../../../api";
 import * as core from "../../../../core";
 
-export const GoSdk: core.serialization.ObjectSchema<serializers.snippets.GoSdk.Raw, Fern.snippets.GoSdk> =
-    core.serialization.object({
-        githubRepo: core.serialization.string(),
-        version: core.serialization.string(),
-    });
+export const GoSdk: core.serialization.ObjectSchema<serializers.GoSdk.Raw, Fern.GoSdk> = core.serialization.object({
+    githubRepo: core.serialization.string(),
+    version: core.serialization.string(),
+});
 
 export declare namespace GoSdk {
     interface Raw {
