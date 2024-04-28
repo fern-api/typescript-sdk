@@ -1,7 +1,7 @@
 import * as environments from "./environments";
 import * as core from "./core";
-import { FernInternalClient } from "Client";
-import { TemplateWrapper } from "api/resources/templates/client/wrapper/Client";
+import { FernInternalClient } from "./Client";
+import { TemplateWrapper } from "./api/resources/templates/client/wrapper/Client";
 
 export declare namespace Fern {
     interface Options {

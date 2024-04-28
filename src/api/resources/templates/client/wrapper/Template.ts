@@ -1,5 +1,6 @@
 import * as Fern from "../../..";
-import * as TemplateResolver from "@fern-api/template-resolver"
+import { SnippetTemplateResolver } from "@fern-api/template-resolver";
+
 
 export class Template implements Fern.templates.EndpointSnippetTemplate {
     private endpointSnippetTemplate: Fern.EndpointSnippetTemplate;
@@ -12,7 +13,7 @@ export class Template implements Fern.templates.EndpointSnippetTemplate {
     }
 
     public resolve(payload: Fern.snippets.CustomSnippetPayload): Fern.snippets.Snippet {
-        const _innerResolver = new TemplateResolver.SnippetTemplateResolver({
+        const _innerResolver = new SnippetTemplateResolver({
             payload,
             endpointSnippetTemplate: this.endpointSnippetTemplate,
         });
