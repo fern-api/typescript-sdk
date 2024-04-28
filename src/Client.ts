@@ -7,9 +7,9 @@ import * as core from "./core";
 import { Snippets } from "./api/resources/snippets/client/Client";
 import { Templates } from "./api/resources/templates/client/Client";
 
-export declare namespace FernClient {
+export declare namespace FernInternalClient {
     interface Options {
-        environment?: core.Supplier<environments.FernEnvironment | string>;
+        environment?: core.Supplier<environments.FernInternalEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
@@ -19,8 +19,8 @@ export declare namespace FernClient {
     }
 }
 
-export class FernClient {
-    constructor(protected readonly _options: FernClient.Options = {}) {}
+export class FernInternalClient {
+    constructor(protected readonly _options: FernInternalClient.Options = {}) {}
 
     protected _snippets: Snippets | undefined;
 

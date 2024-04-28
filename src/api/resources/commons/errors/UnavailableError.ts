@@ -4,7 +4,7 @@
 
 import * as errors from "../../../../errors";
 
-export class UnavailableError extends errors.FernError {
+export class UnavailableError extends errors.FernInternalError {
     constructor(body: string) {
         super({
             message: "UnavailableError",

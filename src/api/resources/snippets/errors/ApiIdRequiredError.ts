@@ -4,7 +4,7 @@
 
 import * as errors from "../../../../errors";
 
-export class ApiIdRequiredError extends errors.FernError {
+export class ApiIdRequiredError extends errors.FernInternalError {
     constructor(body: string) {
         super({
             message: "ApiIdRequiredError",

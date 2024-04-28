@@ -2,7 +2,7 @@
 ## Snippets
 
 
-<details><summary> <code>fern.snippets.<a href="./src/api/resources/snippets/client/Client.ts">get</a>({ ...params }) -> Fern.Snippet[]</code> </summary>
+<details><summary> <code>fernInternal.snippets.<a href="./src/api/resources/snippets/client/Client.ts">get</a>({ ...params }) -> FernInternal.Snippet[]</code> </summary>
 
 <dl>
 
@@ -39,9 +39,9 @@ Get snippet by endpoint method and path
 <dd>
 
 ```ts
-await fern.snippets.get({
+await fernInternal.snippets.get({
     endpoint: {
-        method: Fern.EndpointMethod.Get,
+        method: FernInternal.EndpointMethod.Get,
         path: "/v1/search"
     }
 });
@@ -66,7 +66,7 @@ await fern.snippets.get({
 <dd>
 
 
-**request: `Fern.GetSnippetRequest`** 
+**request: `FernInternal.GetSnippetRequest`** 
 
 
 </dd>
@@ -97,7 +97,7 @@ await fern.snippets.get({
 </details>
 
 
-<details><summary> <code>fern.snippets.<a href="./src/api/resources/snippets/client/Client.ts">load</a>({ ...params }) -> Fern.SnippetsPage</code> </summary>
+<details><summary> <code>fernInternal.snippets.<a href="./src/api/resources/snippets/client/Client.ts">load</a>({ ...params }) -> FernInternal.SnippetsPage</code> </summary>
 
 <dl>
 
@@ -114,7 +114,7 @@ await fern.snippets.get({
 <dd>
 
 ```ts
-await fern.snippets.load({
+await fernInternal.snippets.load({
     page: 1,
     orgId: "vellum",
     apiId: "vellum-ai",
@@ -145,7 +145,7 @@ await fern.snippets.load({
 <dd>
 
 
-**request: `Fern.ListSnippetsRequest`** 
+**request: `FernInternal.ListSnippetsRequest`** 
 
 
 </dd>
