@@ -70,7 +70,7 @@ groups:
           mode: pull-request
           license: MIT
         config:
-          noSerdeLayer: true
+          # noSerdeLayer: true
           namespaceExport: Fern
           includeApiReference: true
 
