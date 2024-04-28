@@ -21,7 +21,7 @@ export class TemplateWrapper extends Templates {
     public async get(
         request: Fern.GetSnippetTemplate,
         requestOptions?: Templates.RequestOptions
-    ): Promise<Fern.EndpointSnippetTemplate> {
+    ): Promise<Template> {
         const innerTemplate = await super.get(request, requestOptions);
         return Template.from(innerTemplate)
     }

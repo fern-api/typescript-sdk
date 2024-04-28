@@ -4,3 +4,6 @@ README.md
 # Client-side logic to improve template-resolution speed.
 src/api/resources/templates/client/wrapper
 src/WrappedClient.ts
+
+# Added additional tests
+src/test/client.test.ts
