@@ -7,9 +7,9 @@ import { Fern } from "../WrappedClient";
 * in `.fernignore`. 
 */
 describe("test", () => {
-    it("basic snippet test", async () => {
+    test.skip("basic snippet test", async () => {
         expect(true).toBe(true);
-        const fern = new Fern({});
+        const fern = new Fern({token: process?.env.FERN_API_KEY});
         const template = await fern.templates.get({
             orgId: "octoai",
             apiId: "api",
