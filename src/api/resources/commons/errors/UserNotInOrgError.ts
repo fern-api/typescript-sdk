@@ -4,7 +4,7 @@
 
 import * as errors from "../../../../errors";
 
-export class UserNotInOrgError extends errors.FernError {
+export class UserNotInOrgError extends errors.FernInternalError {
     constructor() {
         super({
             message: "UserNotInOrgError",

@@ -1,2 +1,2 @@
-export { FernError } from "./FernError";
-export { FernTimeoutError } from "./FernTimeoutError";
+export { FernInternalError } from "./FernInternalError";
+export { FernInternalTimeoutError } from "./FernInternalTimeoutError";
