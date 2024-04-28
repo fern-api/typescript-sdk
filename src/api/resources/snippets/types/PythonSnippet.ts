@@ -5,7 +5,7 @@
 import * as Fern from "../../..";
 
 export interface PythonSnippet {
-    sdk: Fern.snippets.PythonSdk;
-    asyncClient: string;
-    syncClient: string;
+    sdk: Fern.PythonSdk;
+    async_client: string;
+    sync_client: string;
 }

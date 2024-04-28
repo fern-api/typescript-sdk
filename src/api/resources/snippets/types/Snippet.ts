@@ -5,25 +5,30 @@
 import * as Fern from "../../..";
 
 export type Snippet =
-    | Fern.snippets.Snippet.Typescript
-    | Fern.snippets.Snippet.Python
-    | Fern.snippets.Snippet.Java
-    | Fern.snippets.Snippet.Go;
+    | Fern.Snippet.Typescript
+    | Fern.Snippet.Python
+    | Fern.Snippet.Java
+    | Fern.Snippet.Go
+    | Fern.Snippet.Ruby;
 
 export declare namespace Snippet {
-    interface Typescript extends Fern.snippets.TypeScriptSnippet {
+    interface Typescript extends Fern.TypeScriptSnippet {
         type: "typescript";
     }
 
-    interface Python extends Fern.snippets.PythonSnippet {
+    interface Python extends Fern.PythonSnippet {
         type: "python";
     }
 
-    interface Java extends Fern.snippets.JavaSnippet {
+    interface Java extends Fern.JavaSnippet {
         type: "java";
     }
 
-    interface Go extends Fern.snippets.GoSnippet {
+    interface Go extends Fern.GoSnippet {
         type: "go";
+    }
+
+    interface Ruby extends Fern.RubySnippet {
+        type: "ruby";
     }
 }
