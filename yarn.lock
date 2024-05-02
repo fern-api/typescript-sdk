@@ -312,10 +312,10 @@
     tinycolor2 "^1.6.0"
     url-join "4.0.1"
 
-"@fern-api/template-resolver@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@fern-api/template-resolver/-/template-resolver-0.0.3.tgz#671023f6b46ea0b87c162268e88879f7ac155e9f"
-  integrity sha512-VAiZBXJWFGaKXXfhkcmHdTwdbI8YP6QsQdzGt4o7goIa9J89xXWkrHypxQmRdmc+41xfftE7RRzGgbMMhN2TmQ==
+"@fern-api/template-resolver@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@fern-api/template-resolver/-/template-resolver-0.0.5.tgz#d1832a0f692dceec64000ea5a100b48339a10865"
+  integrity sha512-Qjh/+dwF4x3hF4Y9qSoHWQJmeBUFXtJfM4I2uxtKPJIUb+Xw8+iFfT15ql2EzUJ3AXkpWGkT4kVBzIqu7RgbRw==
   dependencies:
     "@fern-api/fdr-sdk" "workspace:*"
     lodash "^4.17.21"
