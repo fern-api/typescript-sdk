@@ -120,8 +120,7 @@ await fernInternal.snippets.load({
     apiId: "vellum-ai",
     sdks: [{
             type: "python",
-            package: "vellum-ai",
-            version: "1.2.1"
+            package: "vellum-ai"
         }]
 });
 ```
