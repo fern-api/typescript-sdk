@@ -6,7 +6,7 @@ export class Template implements Fern.templates.EndpointSnippetTemplate {
     private endpointSnippetTemplate: Fern.EndpointSnippetTemplate;
     constructor(
         public readonly sdk: Fern.snippets.Sdk,
-        public readonly endpointId: Fern.snippets.EndpointIdentifier,
+        public readonly endpointId: Fern.commons.EndpointIdentifier,
         public readonly snippetTemplate: Fern.templates.VersionedSnippetTemplate
     ) {
         this.endpointSnippetTemplate = {sdk, endpointId, snippetTemplate};
