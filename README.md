@@ -1,8 +1,5 @@
 # Fern Typescript Library
 
-<img src="assets/header.svg" alt="drawing" width="100%" class="img-fluid"/>
-<br/>
-
 [![npm shield](https://img.shields.io/npm/v/@fern-api/typescript-sdk)](https://www.npmjs.com/package/@fern-api/typescript-sdk)
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
 
