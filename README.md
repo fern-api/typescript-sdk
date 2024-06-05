@@ -29,11 +29,11 @@ Notable features:
 ## Installation
 
 ```
-npm install --save @fern-api/typescript-sdk
+npm install --save @fern-api/sdk
 
 # or
 
-yarn add @fern-api/typescript-sdk
+yarn add @fern-api/sdk
 ```
 
 ## Usage
