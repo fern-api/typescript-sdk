@@ -1,11 +1,11 @@
 import * as environments from "./environments";
 import * as core from "./core";
-import { FernInternalClient } from "./Client";
+import { FernClient as GeneratedClient } from "./Client";
 import { TemplateWrapper } from "./api/resources/templates/client/wrapper/Client";
 
 export declare namespace Fern {
     interface Options {
-        environment?: core.Supplier<environments.FernInternalEnvironment | string>;
+        environment?: core.Supplier<environments.FernEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
@@ -15,7 +15,7 @@ export declare namespace Fern {
     }
 }
 
-export class Fern extends FernInternalClient {
+export class Fern extends GeneratedClient {
     constructor(protected readonly _options: Fern.Options = {}) {
         super(_options);
     }

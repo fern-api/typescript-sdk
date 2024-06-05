@@ -8,3 +8,6 @@ src/WrappedClient.ts
 
 # Added additional tests
 src/test/client.test.ts
+
+# Ignore anything in .mock
+.mock
