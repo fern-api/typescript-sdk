@@ -91,7 +91,7 @@ export class Templates {
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernEnvironment.Prod,
                 "/snippet-template/register"
             ),
             method: "POST",
@@ -99,7 +99,7 @@ export class Templates {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern-api/sdk",
-                "X-Fern-SDK-Version": "0.5.0",
+                "X-Fern-SDK-Version": "0.8.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -202,7 +202,7 @@ export class Templates {
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernEnvironment.Prod,
                 "/snippet-template/register/batch"
             ),
             method: "POST",
@@ -210,7 +210,7 @@ export class Templates {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern-api/sdk",
-                "X-Fern-SDK-Version": "0.5.0",
+                "X-Fern-SDK-Version": "0.8.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -277,7 +277,7 @@ export class Templates {
     ): Promise<Fern.EndpointSnippetTemplate> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernEnvironment.Prod,
                 "/snippet-template/get"
             ),
             method: "POST",
@@ -285,7 +285,7 @@ export class Templates {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern-api/sdk",
-                "X-Fern-SDK-Version": "0.5.0",
+                "X-Fern-SDK-Version": "0.8.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
