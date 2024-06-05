@@ -40,9 +40,9 @@ yarn add @fern-api/sdk
 
 ### Client-side Execution
 ```typescript
-import { Fern } from "@fern-api/typescript-sdk";
+import { FernClient } from "@fern-api/sdk";
 
-const fern = new Fern({
+const fern = new FernClient({
     token: "YOUR_API_KEY",
 });
 
@@ -80,9 +80,9 @@ const snippet2 = template.resolve({
 
 ### Dynamic Code Examples
 ```typescript
-import { Fern } from "@fern-api/typescript-sdk";
+import { FernClient } from "@fern-api/sdk";
 
-const fern = new Fern({
+const fern = new FernClient({
     token: "YOUR_API_KEY",
 });
 
@@ -108,7 +108,7 @@ const snippets = await fern.snippets.get({
 
 ### Default or Static Code Examples
 ```typescript
-import { Fern } from "@fern-api/typescript-sdk";
+import { FernClient } from "@fern-api/sdk";
 
 const fern = new Fern({
     token: "YOUR_API_KEY",
@@ -136,7 +136,7 @@ a subclass of [FernError](./src/errors/FernError.ts)
 will be thrown:
 
 ```ts
-import { FernError } from "@fern-api/typescript-sdk";
+import { FernError } from "@fern-api/sdk";
 
 try {
   await fern.snippets.get(...);
