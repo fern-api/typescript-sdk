@@ -1,7 +1,7 @@
-import * as environments from "./environments";
-import * as core from "./core";
-import { FernClient as GeneratedClient } from "./Client";
-import { TemplateWrapper } from "./api/resources/templates/client/wrapper/Client";
+import * as environments from "../environments";
+import * as core from "../core";
+import { FernClient as GeneratedClient } from "../Client";
+import { TemplatesClient } from "./TemplatesClient";
 
 export declare namespace FernClient {
     interface Options {
@@ -20,9 +20,9 @@ export class FernClient extends GeneratedClient {
         super(_options);
     }
 
-    protected _templates: TemplateWrapper | undefined;
+    protected _templates: TemplatesClient | undefined;
 
-    public get templates(): TemplateWrapper {
-        return (this._templates ??= new TemplateWrapper(this._options));
+    public get templates(): TemplatesClient {
+        return (this._templates ??= new TemplatesClient(this._options));
     }
 }

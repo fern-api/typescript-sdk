@@ -1,10 +1,12 @@
 # Specify files that shouldn't be modified by Fern
 README.md
 
+# Only prod
+src/environments.ts
+
 # Client-side logic to improve template-resolution speed.
 src/index.ts
-src/api/resources/templates/client/wrapper
-src/WrappedClient.ts
+src/wrapper
 
 # Added additional tests
 src/test/client.test.ts

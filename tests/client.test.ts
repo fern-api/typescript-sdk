@@ -1,4 +1,4 @@
-import { Fern } from "../WrappedClient";
+import { FernClient } from "../src";
 
 /**
 * This is a test file for the SDK.
@@ -9,7 +9,7 @@ import { Fern } from "../WrappedClient";
 describe("test", () => {
     test.skip("basic snippet test", async () => {
         expect(true).toBe(true);
-        const fern = new Fern({token: process?.env.FERN_API_KEY});
+        const fern = new FernClient({token: process?.env.FERN_API_KEY});
         const template = await fern.templates.get({
             orgId: "octoai",
             apiId: "api",
