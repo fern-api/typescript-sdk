@@ -1,89 +1,78 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 imports:
   rootCommons: ../../../commons.yml
   apiReadV1: ../../../api/v1/read/__package__.yml
   apiReadV1Endpoint: ../../../api/v1/read/endpoint.yml
   docsReadV1: ../read/__package__.yml
-
+  commons: ../commons/commons.yml
 types:
   DocsDefinitionDb:
     union:
       v1: DocsDefinitionDbV1
       v2: DocsDefinitionDbV2
       v3: DocsDefinitionDbV3
-
   DocsDefinitionDbV1:
+    availability: deprecated
     properties:
-      pages: map<docsReadV1.PageId, docsReadV1.PageContent>
+      pages: map<commons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
-      files: map<docsReadV1.FileId, DbFileInfo>
+      files: map<commons.FileId, DbFileInfo>
       config: DocsDbConfig
-      colors: optional<docsReadV1.ColorsConfig>
-
+      colors: optional<commons.ColorsConfig>
   DocsDefinitionDbV2:
+    availability: deprecated
     properties:
-      pages: map<docsReadV1.PageId, docsReadV1.PageContent>
+      pages: map<commons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
-      files: map<docsReadV1.FileId, DbFileInfo>
+      files: map<commons.FileId, DbFileInfo>
       config: DocsDbConfig
-      colors: optional<docsReadV1.ColorsConfig>
-      typography: optional<docsReadV1.DocsTypographyConfig>
-
+      colors: optional<commons.ColorsConfig>
+      typography: optional<commons.DocsTypographyConfig>
   DocsDefinitionDbV3:
     properties:
-      pages: map<docsReadV1.PageId, docsReadV1.PageContent>
+      pages: map<commons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
-      files: map<docsReadV1.FileId, DbFileInfoV2>
+      files: map<commons.FileId, DbFileInfoV2>
       config: DocsDbConfig
-
   DocsDbConfig:
     properties:
       title: optional<string>
       navigation: NavigationConfig
-
-      # logo
+      navbarLinks: optional<list<commons.NavbarLink>>
+      footerLinks: optional<list<commons.FooterLink>>
       logoHeight: optional<docsReadV1.Height>
-      logoHref: optional<docsReadV1.Url>
-      favicon: optional<docsReadV1.FileId>
-
-      # styles
-      backgroundImage: optional<docsReadV1.FileId>
+      logoHref: optional<commons.Url>
+      favicon: optional<commons.FileId>
+      metadata: optional<commons.MetadataConfig>
+      redirects: optional<list<commons.RedirectConfig>>
+      backgroundImage: optional<commons.FileId>
       colorsV3: optional<docsReadV1.ColorsConfigV3>
-      navbarLinks: optional<list<docsReadV1.NavbarLink>>
       layout: optional<docsReadV1.DocsLayoutConfig>
-      typographyV2: optional<docsReadV1.DocsTypographyConfigV2>
-
-      # css and js
-      css: optional<docsReadV1.CssConfig>
-      js: optional<docsReadV1.JsConfig>
-
-      # deprecated
+      typographyV2: optional<commons.DocsTypographyConfigV2>
+      integrations: optional<commons.IntegrationsConfig>
+      css: optional<commons.CssConfig>
+      js: optional<commons.JsConfig>
       logo:
-        type: optional<docsReadV1.FileId>
+        type: optional<commons.FileId>
         availability: deprecated
       logoV2:
-        type: optional<docsReadV1.LogoV2>
+        type: optional<commons.ThemedFileId>
         availability: deprecated
       colors:
-        type: optional<docsReadV1.ColorsConfig>
+        type: optional<commons.ColorsConfig>
         availability: deprecated
       colorsV2:
-        type: optional<docsReadV1.ColorsConfigV2>
+        type: optional<commons.ColorsConfigV2>
         availability: deprecated
       typography:
-        type: optional<docsReadV1.DocsTypographyConfig>
+        type: optional<commons.DocsTypographyConfig>
         availability: deprecated
-
   DbFileInfoV2:
     union:
       s3Key: DbFileInfo
       image: DbImageFileInfo
-
   DbFileInfo:
     properties:
       s3Key: string
-
   DbImageFileInfo:
     properties:
       s3Key: string
@@ -91,58 +80,57 @@ types:
       height: double
       blurDataUrl: optional<string>
       alt: optional<string>
-
   NavigationConfig:
-    discriminated: false
     union:
       - UnversionedNavigationConfig
       - VersionedNavigationConfig
-
-  UnversionedNavigationConfig:
     discriminated: false
+  UnversionedNavigationConfig:
     union:
       - UnversionedTabbedNavigationConfig
       - UnversionedUntabbedNavigationConfig
-
+    discriminated: false
   UnversionedTabbedNavigationConfig:
     properties:
-      tabs: list<NavigationTab>
-
+      tabs: optional<list<NavigationTab>>
+      tabsV2: optional<list<NavigationTabV2>>
   NavigationTab:
-    discriminated: false
+    availability: deprecated
     union:
       - NavigationTabGroup
       - docsReadV1.NavigationTabLink
-
+    discriminated: false
+  NavigationTabV2:
+    union:
+      group: NavigationTabGroup
+      link: docsReadV1.NavigationTabLink
+      changelog: docsReadV1.ChangelogSection
   NavigationTabGroup:
     properties:
       title: string
       icon: optional<string>
       items: list<NavigationItem>
       urlSlug: string
-
+      skipUrlSlug: optional<boolean>
   UnversionedUntabbedNavigationConfig:
     properties:
       items: list<NavigationItem>
-
   VersionedNavigationConfig:
     properties:
       versions: list<VersionedNavigationConfigData>
-
   VersionedNavigationConfigData:
     properties:
       version: string
       urlSlug: optional<string>
       availability: optional<docsReadV1.VersionAvailability>
       config: UnversionedNavigationConfig
-
   NavigationItem:
     union:
       page: docsReadV1.PageMetadata
       api: ApiSection
       section: DocsSection
       link: docsReadV1.LinkMetadata
-
+      changelog: docsReadV1.ChangelogSection
   ApiSection:
     properties:
       title: string
@@ -157,8 +145,7 @@ types:
       fullSlug: optional<list<string>>
       navigation: optional<docsReadV1.ApiNavigationConfigRoot>
       longScrolling: optional<boolean>
-      flattened: optional<boolean>      
-
+      flattened: optional<boolean>
   DocsSection:
     properties:
       title: string

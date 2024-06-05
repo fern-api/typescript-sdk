@@ -1,5 +1,3 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 imports:
   endpoint: endpoint.yml
   rootCommons: ../../../commons.yml
@@ -9,7 +7,6 @@ imports:
   readWebhook: ../read/webhook.yml
   readWebsocket: ../read/websocket.yml
   readEndpoint: ../read/endpoint.yml
-
 types:
   DbApiDefinition:
     properties:
@@ -25,10 +22,9 @@ types:
           base urls (i.e. https://a.com and https://b.com)
       navigation:
         type: optional<readRoot.ApiNavigationConfigRoot>
-        availability: deprecated
         docs: Use the docs navigation instead.
+        availability: deprecated
       globalHeaders: optional<list<readEndpoint.Header>>
-
   DbApiDefinitionPackage:
     properties:
       endpoints: list<endpoint.DbEndpointDefinition>
@@ -37,11 +33,12 @@ types:
       types: list<readType.TypeId>
       subpackages: list<readRoot.SubpackageId>
       pointsTo:
-        docs: |
-          if present, this package should be replaced with the provided subpackage
-          in the docs navigation.
         type: optional<readRoot.SubpackageId>
+        docs: >
+          if present, this package should be replaced with the provided
+          subpackage
 
+          in the docs navigation.
   DbApiDefinitionSubpackage:
     extends:
       - readCommons.WithDescription

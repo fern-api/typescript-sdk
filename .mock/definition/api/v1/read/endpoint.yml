@@ -1,15 +1,10 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 imports:
   type: type.yml
   commons: commons.yml
   snippetTemplate: ../../../templates.yml
-
 types:
   EnvironmentId: string
-
   EndpointId: string
-
   EndpointDefinition:
     extends: commons.WithDescription
     properties:
@@ -21,6 +16,7 @@ types:
       environments: list<Environment>
       method: HttpMethod
       id: EndpointId
+      originalEndpointId: optional<string>
       urlSlug: string
       migratedFromUrlSlugs: optional<list<string>>
       name: optional<string>
@@ -29,21 +25,20 @@ types:
       headers: list<Header>
       request: optional<HttpRequest>
       response: optional<HttpResponse>
-      errors: list<ErrorDeclaration>
+      errors:
+        type: list<ErrorDeclaration>
+        availability: deprecated
       errorsV2: optional<list<ErrorDeclarationV2>>
       examples: list<ExampleEndpointCall>
       snippetTemplates: optional<EndpointSnippetTemplates>
-
   EndpointSnippetTemplates:
     properties:
       typescript: optional<snippetTemplate.VersionedSnippetTemplate>
       python: optional<snippetTemplate.VersionedSnippetTemplate>
-
   Environment:
     properties:
       id: EnvironmentId
       baseUrl: string
-
   HttpMethod:
     enum:
       - GET
@@ -51,17 +46,14 @@ types:
       - PUT
       - PATCH
       - DELETE
-
   EndpointPath:
     properties:
       parts: list<EndpointPathPart>
       pathParameters: list<PathParameter>
-
   EndpointPathPart:
     union:
       literal: string
       pathParameter: PathParameterKey
-
   PathParameter:
     extends:
       - commons.WithDescription
@@ -69,9 +61,7 @@ types:
     properties:
       key: PathParameterKey
       type: type.TypeReference
-
   PathParameterKey: string
-
   QueryParameter:
     extends:
       - commons.WithDescription
@@ -79,7 +69,6 @@ types:
     properties:
       key: string
       type: type.TypeReference
-
   Header:
     extends:
       - commons.WithDescription
@@ -87,32 +76,33 @@ types:
     properties:
       key: string
       type: type.TypeReference
-
   HttpRequest:
     extends: commons.WithDescription
     properties:
       contentType: string
       type: HttpRequestBodyShape
-
   HttpRequestBodyShape:
     union:
       object: type.ObjectType
       reference: type.TypeReference
-      fileUpload:
-        type: optional<type.FileUploadRequest>
-        docs: "`fileUpload` is optional only to be backwards compatible. It should be required."
       bytes: type.BytesRequest
-
+      formData: type.FormDataRequest
+      fileUpload:
+        docs: >-
+          `fileUpload` is optional only to be backwards compatible. It should be
+          required.
+        type: optional<type.FormDataRequest>
   HttpResponse:
     extends: commons.WithDescription
     properties:
       type: HttpResponseBodyShape
-
+      statusCode:
+        type: optional<integer>
+        docs: Defaults to 200
   JsonBodyShape:
     union:
       object: type.ObjectType
       reference: type.TypeReference
-
   HttpResponseBodyShape:
     union:
       object: type.ObjectType
@@ -120,17 +110,13 @@ types:
       fileDownload: FileDownloadResponseBodyShape
       streamingText: {}
       stream: StreamResponseV2
-
-      # deprecated
       streamCondition:
-        type: StreamConditionResponse
         docs: |
           A response that can either be streaming or REST
-
+        type: StreamConditionResponse
   FileDownloadResponseBodyShape:
     properties:
       contentType: optional<string>
-
   StreamResponseV2:
     properties:
       terminator:
@@ -139,30 +125,25 @@ types:
           The terminator for each message. For example, for OpenAPI 
           the terminator is [DATA].
       shape: JsonBodyShape
-
   StreamConditionResponse:
     availability: deprecated
     properties:
       response: NonStreamResponse
       streamResponse: StreamResponse
       streamCondition: StreamCondition
-
   NonStreamResponse:
     availability: deprecated
     properties:
       shape: JsonBodyShape
       examples: list<ExampleEndpointCall>
-
   StreamResponse:
     availability: deprecated
     properties:
       shape: JsonBodyShape
       examples: list<ExampleEndpointCall>
-
   StreamCondition:
     union:
       booleanRequestProperty: type.PropertyKey
-
   ErrorDeclaration:
     extends:
       - commons.WithDescription
@@ -170,7 +151,6 @@ types:
     properties:
       type: optional<type.TypeReference>
       statusCode: integer
-
   ErrorDeclarationV2:
     extends:
       - commons.WithDescription
@@ -179,9 +159,7 @@ types:
       type: optional<type.TypeShape>
       statusCode: integer
       name: optional<string>
-
-  # examples
-
+      examples: optional<list<ErrorExample>>
   ExampleEndpointCall:
     extends: commons.WithDescription
     properties:
@@ -197,7 +175,6 @@ types:
       responseBodyV3: optional<ExampleEndpointResponse>
       codeExamples: CodeExamples
       codeSamples: list<CustomCodeSample>
-
   CodeExamples:
     properties:
       nodeAxios: optional<string>
@@ -205,7 +182,6 @@ types:
       typescriptSdk: optional<TypescriptSnippet>
       goSdk: optional<GoSnippet>
       rubySdk: optional<RubySnippet>
-
   CustomCodeSample:
     docs: Hand-written code samples
     extends: commons.WithDescription
@@ -214,56 +190,69 @@ types:
       code: string
       name: optional<string>
       install: optional<string>
-
   Language:
-    discriminated: false
+    docs: >-
+      Fallback to string to catch-all for languages that are not supported by
+      fern
     union:
       - SupportedLanguage
       - string
-    docs: Fallback to string to catch-all for languages that are not supported by fern
-
+    discriminated: false
   SupportedLanguage:
     enum:
       - curl
       - python
       - javascript
-      - js # alias to javascript
-      - node # alias to javascript
+      - js
+      - node
       - typescript
-      - ts # alias to typescript
+      - ts
       - go
       - ruby
-
   ExampleEndpointRequest:
     union:
       json: unknown
       form: map<string, FormValue>
-
+      bytes: BytesValue
   FormValue:
     union:
       json: unknown
       filename: string
+      filenames: list<string>
       filenameWithData: FilenameWithData
-
+      filenamesWithData: list<FilenameWithData>
+  BytesValue:
+    union:
+      base64: string
   FilenameWithData:
     properties:
       filename: string
       data: FileId
-
   FileId: string
-
   ExampleEndpointResponse:
     union:
       json: unknown
       filename: string
       stream: list<unknown>
-
+      sse: list<ExampleServerSentEvent>
+  ExampleServerSentEvent:
+    properties:
+      event: string
+      data: unknown
+  ErrorExample:
+    extends:
+      - commons.WithDescription
+    properties:
+      name: optional<string>
+      responseBody: ExampleErrorResponse
+  ExampleErrorResponse:
+    union:
+      json: unknown
   PythonSnippet:
     properties:
       async_client: string
       sync_client: string
       install: optional<string>
-
   TypescriptSnippet:
     properties:
       client:
@@ -271,7 +260,6 @@ types:
         docs: |
           The client code that is generated by the fern compiler
       install: optional<string>
-
   GoSnippet:
     properties:
       client:
@@ -279,7 +267,6 @@ types:
         docs: |
           The client code that is generated by the fern compiler
       install: optional<string>
-
   RubySnippet:
     properties:
       client:

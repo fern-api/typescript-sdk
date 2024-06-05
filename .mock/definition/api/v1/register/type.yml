@@ -1,11 +1,7 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 imports:
   commons: commons.yml
-
 types:
   TypeId: string
-
   TypeDefinition:
     extends:
       - commons.WithDescription
@@ -13,7 +9,6 @@ types:
     properties:
       name: string
       shape: TypeShape
-
   TypeShape:
     union:
       alias: TypeReference
@@ -21,7 +16,6 @@ types:
       undiscriminatedUnion: UndiscriminatedUnionType
       discriminatedUnion: DiscriminatedUnionType
       object: ObjectType
-
   TypeReference:
     union:
       id: TypeId
@@ -32,14 +26,11 @@ types:
       map: MapType
       literal: LiteralType
       unknown: {}
-
   ObjectType:
     properties:
       extends: list<TypeId>
       properties: list<ObjectProperty>
-
   PropertyKey: string
-
   ObjectProperty:
     extends:
       - commons.WithDescription
@@ -47,7 +38,6 @@ types:
     properties:
       key: PropertyKey
       valueType: TypeReference
-
   PrimitiveType:
     union:
       integer: IntegerType
@@ -59,59 +49,48 @@ types:
       uuid: {}
       base64: {}
       date: {}
-
   IntegerType:
     properties:
       minimum: optional<integer>
       maximum: optional<integer>
       default: optional<integer>
-  
   DoubleType:
     properties:
       minimum: optional<double>
       maximum: optional<double>
       default: optional<double>
-  
-  StringType: 
+  StringType:
     properties:
       regex: optional<string>
       minLength: optional<integer>
       maxLength: optional<integer>
       default: optional<string>
-
   OptionalType:
     properties:
       itemType: TypeReference
       defaultValue: optional<unknown>
-
   ListType:
     properties:
       itemType: TypeReference
-
   SetType:
     properties:
       itemType: TypeReference
-
   MapType:
     properties:
       keyType: TypeReference
       valueType: TypeReference
-
   EnumType:
     properties:
       values: list<EnumValue>
-
   EnumValue:
     extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
       value: string
-
   UndiscriminatedUnionType:
     properties:
       variants: list<UndiscriminatedUnionVariant>
-
   UndiscriminatedUnionVariant:
     extends:
       - commons.WithDescription
@@ -119,12 +98,10 @@ types:
     properties:
       typeName: optional<string>
       type: TypeReference
-
   DiscriminatedUnionType:
     properties:
       discriminant: string
       variants: list<DiscriminatedUnionVariant>
-
   DiscriminatedUnionVariant:
     extends:
       - commons.WithDescription
@@ -132,20 +109,17 @@ types:
     properties:
       discriminantValue: string
       additionalProperties: ObjectType
-
   LiteralType:
     union:
       booleanLiteral: boolean
       stringLiteral: string
-
-  FileUploadRequest:
+  FormDataRequest:
     extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
       name: string
-      properties: list<FileUploadRequestProperty>
-
+      properties: list<FormDataProperty>
   BytesRequest:
     extends:
       - commons.WithDescription
@@ -153,17 +127,18 @@ types:
     properties:
       isOptional: boolean
       contentType: optional<string>
-
-  FileUploadRequestProperty:
+  FormDataProperty:
     union:
-      file: FileProperty
-      bodyProperty: ObjectProperty
-
-  FileProperty:
+      file: FormDataFileProperty
+      bodyProperty: FormDataBodyProperty
+  FormDataBodyProperty:
+    extends: ObjectProperty
+    properties:
+      contentType: optional<ContentType>
+  FormDataFileProperty:
     union:
       file: FilePropertySingle
       fileArray: FilePropertyArray
-
   FilePropertySingle:
     extends:
       - commons.WithDescription
@@ -171,7 +146,7 @@ types:
     properties:
       key: PropertyKey
       isOptional: boolean
-
+      contentType: optional<ContentType>
   FilePropertyArray:
     extends:
       - commons.WithDescription
@@ -179,3 +154,9 @@ types:
     properties:
       key: PropertyKey
       isOptional: boolean
+      contentType: optional<ContentType>
+  ContentType:
+    union:
+      - string
+      - list<string>
+    discriminated: false

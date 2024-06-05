@@ -1,15 +1,29 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 imports:
   rootCommons: ../../../commons.yml
   v1DocsRead: ../../v1/read/__package__.yml
   apiReadV1: ../../../api/v1/read/__package__.yml
-
+types:
+  GetDocsConfigByIdResponse:
+    properties:
+      docsConfig: v1DocsRead.DocsConfig
+      apis: map<rootCommons.ApiDefinitionId, apiReadV1.ApiDefinition>
+  LoadDocsForUrlResponse:
+    properties:
+      baseUrl: BaseUrl
+      definition: v1DocsRead.DocsDefinition
+      lightModeEnabled: boolean
+  GetSearchApiKeyForIndexSegmentResponse:
+    properties:
+      searchApiKey: string
+  BaseUrl:
+    properties:
+      domain: string
+      basePath: optional<string>
 service:
-  base-path: /v2/registry/docs
-  auth: false
   audiences:
     - read
+  auth: false
+  base-path: /v2/registry/docs
   endpoints:
     getOrganizationForUrl:
       method: POST
@@ -22,7 +36,6 @@ service:
       response: rootCommons.OrgId
       errors:
         - DomainNotRegisteredError
-
     getDocsForUrl:
       method: POST
       path: /load-with-url
@@ -35,11 +48,10 @@ service:
       errors:
         - DomainNotRegisteredError
         - rootCommons.UnauthorizedError
-
     getPrivateDocsForUrl:
       method: POST
-      auth: true
       path: /private/load-with-url
+      auth: true
       request:
         name: LoadPrivateDocsForUrlRequest
         body:
@@ -49,18 +61,16 @@ service:
       errors:
         - DomainNotRegisteredError
         - rootCommons.UnauthorizedError
-
     getDocsConfigById:
-      method: GET
-      path: /{docsConfigId}
       docs: |
         Loads the Docs Config and any referenced APIs by ID.
+      method: GET
+      path: /{docsConfigId}
       path-parameters:
         docsConfigId: rootCommons.DocsConfigId
       response: GetDocsConfigByIdResponse
       errors:
         - DocsDefinitionNotFoundError
-
     getSearchApiKeyForIndexSegment:
       method: POST
       path: /search-api-key-with-index-segment
@@ -72,34 +82,10 @@ service:
       response: GetSearchApiKeyForIndexSegmentResponse
       errors:
         - IndexSegmentNotFoundError
-
-types:
-  GetDocsConfigByIdResponse:
-    properties:
-      docsConfig: v1DocsRead.DocsConfig
-      apis: map<rootCommons.ApiDefinitionId, apiReadV1.ApiDefinition>
-
-  LoadDocsForUrlResponse:
-    properties:
-      baseUrl: BaseUrl
-      definition: v1DocsRead.DocsDefinition
-      lightModeEnabled: boolean
-
-  GetSearchApiKeyForIndexSegmentResponse:
-    properties:
-      searchApiKey: string
-
-  BaseUrl:
-    properties:
-      domain: string
-      basePath: optional<string>
-
 errors:
   DocsDefinitionNotFoundError:
     status-code: 404
-
   DomainNotRegisteredError:
     status-code: 404
-
   IndexSegmentNotFoundError:
     status-code: 404

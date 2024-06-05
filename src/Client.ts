@@ -7,20 +7,21 @@ import * as core from "./core";
 import { Snippets } from "./api/resources/snippets/client/Client";
 import { Templates } from "./api/resources/templates/client/Client";
 
-export declare namespace FernInternalClient {
+export declare namespace FernClient {
     interface Options {
-        environment?: core.Supplier<environments.FernInternalEnvironment | string>;
+        environment?: core.Supplier<environments.FernEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
-export class FernInternalClient {
-    constructor(protected readonly _options: FernInternalClient.Options = {}) {}
+export class FernClient {
+    constructor(protected readonly _options: FernClient.Options = {}) {}
 
     protected _snippets: Snippets | undefined;
 

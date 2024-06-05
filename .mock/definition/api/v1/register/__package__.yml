@@ -1,5 +1,3 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 imports:
   endpoint: endpoint.yml
   type: type.yml
@@ -7,16 +5,116 @@ imports:
   commons: commons.yml
   webhook: webhook.yml
   websocket: websocket.yml
+types:
+  RegisterApiDefinitionResponse:
+    properties:
+      apiDefinitionId: rootCommons.ApiDefinitionId
+  ApiDefinition:
+    properties:
+      rootPackage: ApiDefinitionPackage
+      types: map<type.TypeId, type.TypeDefinition>
+      subpackages: map<SubpackageId, ApiDefinitionSubpackage>
+      auth: optional<ApiAuth>
+      globalHeaders: optional<list<endpoint.Header>>
+      snippetsConfiguration: optional<SnippetsConfig>
+      navigation:
+        type: optional<ApiNavigationConfigRoot>
+        docs: Use the docs navigation instead.
+        availability: deprecated
+  ApiNavigationConfigRoot:
+    properties:
+      items: list<ApiNavigationConfigItem>
+  ApiNavigationConfigItem:
+    union:
+      subpackage: ApiNavigationConfigSubpackage
+      endpointId: endpoint.EndpointId
+      websocketId: websocket.WebSocketId
+      webhookId: webhook.WebhookId
+  ApiNavigationConfigSubpackage:
+    properties:
+      subpackageId: SubpackageId
+      items: list<ApiNavigationConfigItem>
+  SnippetsConfig:
+    properties:
+      typescriptSdk: optional<TypescriptPackage>
+      pythonSdk: optional<PythonPackage>
+      goSdk: optional<GoModule>
+      javaSdk: optional<JavaCoordinate>
+      rubySdk: optional<RubyGem>
+  TypescriptPackage:
+    properties:
+      package: string
+      version: optional<string>
+  PythonPackage:
+    properties:
+      package: string
+      version: optional<string>
+  GoModule:
+    properties:
+      githubRepo: string
+      version: optional<string>
+  JavaCoordinate:
+    properties:
+      coordinate: string
+      version: optional<string>
+  RubyGem:
+    properties:
+      gem: string
+      version: optional<string>
+  ApiDefinitionPackage:
+    properties:
+      endpoints: list<endpoint.EndpointDefinition>
+      websockets: optional<list<websocket.WebSocketChannel>>
+      webhooks: optional<list<webhook.WebhookDefinition>>
+      types: list<type.TypeId>
+      subpackages: list<SubpackageId>
+      pointsTo:
+        type: optional<SubpackageId>
+        docs: >
+          if present, this package should be replaced with the provided
+          subpackage
 
+          in the docs navigation.
+  ApiDefinitionSubpackage:
+    extends:
+      - ApiDefinitionPackage
+      - commons.WithDescription
+    properties:
+      subpackageId: SubpackageId
+      name: string
+      displayName: optional<string>
+  SubpackageId: string
+  ApiAuth:
+    union:
+      bearerAuth: BearerAuth
+      basicAuth: BasicAuth
+      header: HeaderAuth
+  BasicAuth:
+    properties:
+      usernameName: optional<string>
+      passwordName: optional<string>
+  BearerAuth:
+    properties:
+      tokenName: optional<string>
+  HeaderAuth:
+    properties:
+      nameOverride: optional<string>
+      headerWireValue: string
+      prefix:
+        type: optional<string>
+        docs: The prefix that comes before the header
+  EndpointExampleGenerationErrorBody:
+    properties:
+      endpointId: string
 service:
-  auth: true
-  base-path: /registry/api
   audiences:
     - write
+  auth: true
+  base-path: /registry/api
   endpoints:
     registerApiDefinition:
-      path: /register
       method: POST
+      path: /register
       request:
         name: RegisterApiDefinitionRequest
         body:
@@ -28,125 +126,6 @@ service:
       errors:
         - rootCommons.UnauthorizedError
         - rootCommons.UserNotInOrgError
-
-types:
-  RegisterApiDefinitionResponse:
-    properties:
-      apiDefinitionId: rootCommons.ApiDefinitionId
-
-  ApiDefinition:
-    properties:
-      rootPackage: ApiDefinitionPackage
-      types: map<type.TypeId, type.TypeDefinition>
-      subpackages: map<SubpackageId, ApiDefinitionSubpackage>
-      auth: optional<ApiAuth>
-      globalHeaders: optional<list<endpoint.Header>>
-      snippetsConfiguration: optional<SnippetsConfig>
-      navigation:
-        type: optional<ApiNavigationConfigRoot>
-        availability: deprecated
-        docs: Use the docs navigation instead.
-
-  ApiNavigationConfigRoot:
-    properties:
-      items: list<ApiNavigationConfigItem>
-
-  ApiNavigationConfigItem:
-    union:
-      subpackage: ApiNavigationConfigSubpackage
-      endpointId: endpoint.EndpointId
-      websocketId: websocket.WebSocketId
-      webhookId: webhook.WebhookId
-
-  ApiNavigationConfigSubpackage:
-    properties:
-      subpackageId: SubpackageId
-      items: list<ApiNavigationConfigItem>
-
-  SnippetsConfig:
-    properties:
-      typescriptSdk: optional<TypescriptPackage>
-      pythonSdk: optional<PythonPackage>
-      goSdk: optional<GoModule>
-      javaSdk: optional<JavaCoordinate>
-      rubySdk: optional<RubyGem>
-
-  TypescriptPackage:
-    properties:
-      package: string
-      version: optional<string>
-
-  PythonPackage:
-    properties:
-      package: string
-      version: optional<string>
-
-  GoModule:
-    properties:
-      githubRepo: string
-      version: optional<string>
-
-  JavaCoordinate:
-    properties:
-      coordinate: string
-      version: optional<string>
-
-  RubyGem:
-    properties:
-      gem: string
-      version: optional<string>
-
-  ApiDefinitionPackage:
-    properties:
-      endpoints: list<endpoint.EndpointDefinition>
-      websockets: optional<list<websocket.WebSocketChannel>>
-      webhooks: optional<list<webhook.WebhookDefinition>>
-      types: list<type.TypeId>
-      subpackages: list<SubpackageId>
-      pointsTo:
-        docs: |
-          if present, this package should be replaced with the provided subpackage
-          in the docs navigation.
-        type: optional<SubpackageId>
-
-  ApiDefinitionSubpackage:
-    extends:
-      - ApiDefinitionPackage
-      - commons.WithDescription
-    properties:
-      subpackageId: SubpackageId
-      name: string
-      displayName: optional<string>
-
-  SubpackageId: string
-
-  ApiAuth:
-    union:
-      bearerAuth: BearerAuth
-      basicAuth: BasicAuth
-      header: HeaderAuth
-
-  BasicAuth:
-    properties:
-      usernameName: optional<string>
-      passwordName: optional<string>
-
-  BearerAuth:
-    properties:
-      tokenName: optional<string>
-
-  HeaderAuth:
-    properties:
-      nameOverride: optional<string>
-      headerWireValue: string
-      prefix:
-        type: optional<string>
-        docs: The prefix that comes before the header
-
-  EndpointExampleGenerationErrorBody:
-    properties:
-      endpointId: string
-
 errors:
   EndpointExampleGenerationError:
     status-code: 500
