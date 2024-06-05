@@ -110,7 +110,7 @@ const snippets = await fern.snippets.get({
 ```typescript
 import { FernClient } from "@fern-api/sdk";
 
-const fern = new Fern({
+const fern = new FernClient({
     token: "YOUR_API_KEY",
 });
 
