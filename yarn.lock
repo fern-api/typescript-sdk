@@ -301,10 +301,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@fern-api/template-resolver@0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@fern-api/template-resolver/-/template-resolver-0.3.0.tgz#29198be1d42e644bf16ab8370a370f4f09005156"
-  integrity sha512-na7B2hVkRJnR0pMqJZK7ulAQQYUHYVXXYtIVlBHZBY6Ko43G2q70DPROcM4vMx2eE6vP7xRnHAww3g4YZboniA==
+"@fern-api/template-resolver@0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@fern-api/template-resolver/-/template-resolver-0.5.1.tgz#5700a66df3b6c63f5a1c60c3d80f248ee9f57acc"
+  integrity sha512-PRV2Q1e6F7wQsBu8VPdfsR11EKRkQxsUz4K1sB9VAUGZ3JkTCGzQAr457kfywSuoOPJVeJhPgu/uQ2ep5ew+Nw==
   dependencies:
     lodash "^4.17.21"
 
