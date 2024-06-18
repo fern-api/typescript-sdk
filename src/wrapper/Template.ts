@@ -26,6 +26,21 @@ export class Template implements Fern.templates.EndpointSnippetTemplate {
         return _innerResolver.resolve();
     }
 
+    /**
+     * Resolves a particular request payload against the template to produce a snippet with 
+     * formatting.
+     * @param payload the paylod to resolve against
+     * @returns the snippet
+     */
+    public async resolveFormatted(payload: Fern.snippets.CustomSnippetPayload): Promise<Fern.snippets.Snippet> {
+        const _innerResolver = new SnippetTemplateResolver({
+            payload,
+            endpointSnippetTemplate: this.endpointSnippetTemplate,
+        });
+
+        return await _innerResolver.resolveWithFormatting();
+    }
+
     public static from(template: Fern.templates.EndpointSnippetTemplate): Template {
         return new Template(template.sdk, template.endpointId, template.snippetTemplate);
     }

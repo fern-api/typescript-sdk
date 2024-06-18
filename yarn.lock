@@ -301,12 +301,13 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@fern-api/template-resolver@0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@fern-api/template-resolver/-/template-resolver-0.5.2.tgz#da1a0d2ebed6787d200aee2218935f1ad0038e2a"
-  integrity sha512-YiV9/nsef5dLyMBolzx8SMhH6gdybsLaNabDxbkiT4x1Avizs+Eomui31pEoqGBcaUwI0gywTbeNhnNt+qVzHw==
+"@fern-api/template-resolver@0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@fern-api/template-resolver/-/template-resolver-0.6.0.tgz#0b492da1397be3af8776a633cc9525bf5679a056"
+  integrity sha512-X+SMPlpjGn3ZYPQ/VMnjM4buTDbePFnzKAOr153n0ul2fTMbVt6pVs5y9GOc2wE1WbF4rvyzPF3e4DZnad7SkA==
   dependencies:
-    lodash "^4.17.21"
+    "@wasm-fmt/ruff_fmt" "^0.5.10"
+    lodash-es "^4.17.21"
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
@@ -699,6 +700,11 @@
   integrity sha512-xQ67Yc/laOG5uMfX/093MRlGGCIBzZMarVa+gfNKJxWAIgykYpVGkBdbqEzGDDfCrVUj6Hiff4mTZ5BA6TmAog==
   dependencies:
     "@types/yargs-parser" "*"
+
+"@wasm-fmt/ruff_fmt@^0.5.10":
+  version "0.5.10"
+  resolved "https://registry.yarnpkg.com/@wasm-fmt/ruff_fmt/-/ruff_fmt-0.5.10.tgz#7b9e788552e336d38971a39ad9a1c748795cdce6"
+  integrity sha512-PR0uVT1xGBJh9t22b2Hd7smFjlKygwN30DgDQ1QovFmZZiTkS7Y8yHiyMYsPKlbEko3Q2fnfCTJJOCZm8NqWWA==
 
 abab@^2.0.6:
   version "2.0.6"
@@ -1996,15 +2002,15 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
+lodash-es@^4.17.21:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
+  integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
+
 lodash.memoize@4.x:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
   integrity sha512-t7j+NzmgnQzTAYXcsHYLgimltOV1MXHtlOWf6GjL9Kj8GK5FInw5JotxvbOs+IvV1/Dzo04/fCGfLVs7aXb4Ag==
-
-lodash@^4.17.21:
-  version "4.17.21"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
-  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 lru-cache@^5.1.1:
   version "5.1.1"
