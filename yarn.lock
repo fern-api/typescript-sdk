@@ -301,13 +301,12 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@fern-api/template-resolver@0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@fern-api/template-resolver/-/template-resolver-0.6.0.tgz#0b492da1397be3af8776a633cc9525bf5679a056"
-  integrity sha512-X+SMPlpjGn3ZYPQ/VMnjM4buTDbePFnzKAOr153n0ul2fTMbVt6pVs5y9GOc2wE1WbF4rvyzPF3e4DZnad7SkA==
+"@fern-api/template-resolver@0.7.3":
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/@fern-api/template-resolver/-/template-resolver-0.7.3.tgz#708b15b9e02ab97138554c52d9c05fe7221190dd"
+  integrity sha512-VjzzXtGOeXAoK4V7WZc+1uNXDbb+R9uGMMHy2tG1P9LCwZFxtCfygdb1Ob5TagdZZudgQnexpqFQZ51hXF+LcQ==
   dependencies:
     "@wasm-fmt/ruff_fmt" "^0.5.10"
-    lodash-es "^4.17.21"
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
@@ -2001,11 +2000,6 @@ locate-path@^5.0.0:
   integrity sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==
   dependencies:
     p-locate "^4.1.0"
-
-lodash-es@^4.17.21:
-  version "4.17.21"
-  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
-  integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
 
 lodash.memoize@4.x:
   version "4.1.2"
