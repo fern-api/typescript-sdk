@@ -301,10 +301,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@fern-api/template-resolver@0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@fern-api/template-resolver/-/template-resolver-0.7.2.tgz#30b66cc9727e2ca1d681292092704b635bb81a70"
-  integrity sha512-+jKSjjK6r0PHnDTF0ysB0p4QBuB5B7Yqy4XGQgnLd496ANmBvyViLLm0YMJTq2u/7S6dLVs1JOo6CXJkDa+qyA==
+"@fern-api/template-resolver@0.7.3":
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/@fern-api/template-resolver/-/template-resolver-0.7.3.tgz#708b15b9e02ab97138554c52d9c05fe7221190dd"
+  integrity sha512-VjzzXtGOeXAoK4V7WZc+1uNXDbb+R9uGMMHy2tG1P9LCwZFxtCfygdb1Ob5TagdZZudgQnexpqFQZ51hXF+LcQ==
   dependencies:
     "@wasm-fmt/ruff_fmt" "^0.5.10"
 
