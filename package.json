@@ -1,6 +1,6 @@
 {
     "name": "@fern-api/sdk",
-    "version": "0.11.2",
+    "version": "0.12.0",
     "private": false,
     "repository": "https://github.com/fern-api/fern-typescript",
     "license": "MIT",
@@ -19,7 +19,7 @@
         "node-fetch": "2.7.0",
         "qs": "6.11.2",
         "js-base64": "3.7.2",
-        "@fern-api/template-resolver": "0.7.4"
+        "@fern-api/template-resolver": "0.3.0"
     },
     "devDependencies": {
         "@types/url-join": "4.0.1",
