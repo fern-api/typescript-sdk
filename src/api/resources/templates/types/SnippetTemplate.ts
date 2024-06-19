@@ -5,6 +5,6 @@
 import * as Fern from "../../../index";
 
 export interface SnippetTemplate {
-    clientInstantiation: string;
+    clientInstantiation: Fern.ClientInstantiation;
     functionInvocation: Fern.Template;
 }

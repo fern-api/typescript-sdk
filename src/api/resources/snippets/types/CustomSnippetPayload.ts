@@ -9,4 +9,5 @@ export interface CustomSnippetPayload {
     pathParameters?: Fern.ParameterPayload[];
     queryParameters?: Fern.ParameterPayload[];
     requestBody?: unknown;
+    auth?: Fern.AuthPayload;
 }
