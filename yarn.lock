@@ -301,12 +301,12 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@fern-api/template-resolver@0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@fern-api/template-resolver/-/template-resolver-0.3.0.tgz#29198be1d42e644bf16ab8370a370f4f09005156"
-  integrity sha512-na7B2hVkRJnR0pMqJZK7ulAQQYUHYVXXYtIVlBHZBY6Ko43G2q70DPROcM4vMx2eE6vP7xRnHAww3g4YZboniA==
+"@fern-api/template-resolver@0.7.4":
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/@fern-api/template-resolver/-/template-resolver-0.7.4.tgz#0f71de0840ff6dfeed3f40658379c4ff92c47999"
+  integrity sha512-nFJqD0WO1NRSbngNWYpHVMo5nBhxU+1eawqSuFsB9h0HxARG2vitbkIPZIZXIIT3su9KUBqcd41NlasOoEQadw==
   dependencies:
-    lodash "^4.17.21"
+    prettier "^2.8.8"
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
@@ -2003,11 +2003,6 @@ lodash.memoize@4.x:
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
   integrity sha512-t7j+NzmgnQzTAYXcsHYLgimltOV1MXHtlOWf6GjL9Kj8GK5FInw5JotxvbOs+IvV1/Dzo04/fCGfLVs7aXb4Ag==
 
-lodash@^4.17.21:
-  version "4.17.21"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
-  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
-
 lru-cache@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-5.1.1.tgz#1da27e6710271947695daf6848e847f01d84b920"
@@ -2223,6 +2218,11 @@ prettier@2.7.1:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.7.1.tgz#e235806850d057f97bb08368a4f7d899f7760c64"
   integrity sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==
+
+prettier@^2.8.8:
+  version "2.8.8"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.8.tgz#e8c5d7e98a4305ffe3de2e1fc4aca1a71c28b1da"
+  integrity sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==
 
 pretty-format@^29.0.0, pretty-format@^29.7.0:
   version "29.7.0"
