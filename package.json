@@ -1,6 +1,6 @@
 {
     "name": "@fern-api/sdk",
-    "version": "0.10.1",
+    "version": "0.11.1",
     "private": false,
     "repository": "https://github.com/fern-api/fern-typescript",
     "license": "MIT",
