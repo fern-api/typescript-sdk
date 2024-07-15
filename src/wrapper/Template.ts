@@ -41,6 +41,10 @@ export class Template implements Fern.templates.EndpointSnippetTemplate {
         return await _innerResolver.resolveWithFormatting();
     }
 
+    public serialize(): string {
+        return JSON.stringify(this.endpointSnippetTemplate);
+    }
+
     public static from(template: Fern.templates.EndpointSnippetTemplate): Template {
         return new Template(template.sdk, template.endpointId, template.snippetTemplate);
     }
