@@ -129,6 +129,18 @@ const snippets = await fern.snippets.get({
 });
 ```
 
+### Snippet Registry
+Register your snippets for each language by defining them in a `snippets` directory and then use our 
+SDK to reference those snippets from anywhere else: 
+
+```typescript
+import { SnippetRegistry } from "@fern-api/sdk";
+
+const registry = new SnippetRegistry({
+    token: "YOUR_API_KEY",
+}); 
+const createUser = await registr.get("go", "create-user"); 
+```
 
 ### Handling Errors
 When the API returns a non-success status code (4xx or 5xx response), 
