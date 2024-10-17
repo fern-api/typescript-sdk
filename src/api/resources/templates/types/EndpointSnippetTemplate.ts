@@ -7,6 +7,7 @@ import * as Fern from "../../../index";
 export interface EndpointSnippetTemplate {
     sdk: Fern.Sdk;
     endpointId: Fern.EndpointIdentifier;
+    apiDefinitionId?: Fern.ApiDefinitionId;
     /** The default snippet template to use */
     snippetTemplate: Fern.VersionedSnippetTemplate;
     /**

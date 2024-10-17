@@ -12,6 +12,7 @@ export declare namespace Templates {
     interface Options {
         environment?: core.Supplier<environments.FernEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        fetcher?: core.FetchFunction;
     }
 
     interface RequestOptions {
@@ -43,7 +44,7 @@ export class Templates {
      *             },
      *             endpointId: {
      *                 path: "string",
-     *                 method: Fern.EndpointMethod.Put,
+     *                 method: Fern.HttpMethod.Get,
      *                 identifierOverride: "string"
      *             },
      *             snippetTemplate: {
@@ -89,7 +90,7 @@ export class Templates {
         request: Fern.RegisterSnippetTemplateRequest,
         requestOptions?: Templates.RequestOptions
     ): Promise<void> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernEnvironment.Prod,
                 "/snippet-template/register"
@@ -99,7 +100,7 @@ export class Templates {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern-api/sdk",
-                "X-Fern-SDK-Version": "0.12.1",
+                "X-Fern-SDK-Version": "0.13.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -154,7 +155,7 @@ export class Templates {
      *                 },
      *                 endpointId: {
      *                     path: "string",
-     *                     method: Fern.EndpointMethod.Put,
+     *                     method: Fern.HttpMethod.Get,
      *                     identifierOverride: "string"
      *                 },
      *                 snippetTemplate: {
@@ -200,7 +201,7 @@ export class Templates {
         request: Fern.RegisterSnippetTemplateBatchRequest,
         requestOptions?: Templates.RequestOptions
     ): Promise<void> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernEnvironment.Prod,
                 "/snippet-template/register/batch"
@@ -210,7 +211,7 @@ export class Templates {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern-api/sdk",
-                "X-Fern-SDK-Version": "0.12.1",
+                "X-Fern-SDK-Version": "0.13.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -266,7 +267,7 @@ export class Templates {
      *         },
      *         endpointId: {
      *             path: "string",
-     *             method: Fern.EndpointMethod.Put,
+     *             method: Fern.HttpMethod.Get,
      *             identifierOverride: "string"
      *         }
      *     })
@@ -275,7 +276,7 @@ export class Templates {
         request: Fern.GetSnippetTemplate,
         requestOptions?: Templates.RequestOptions
     ): Promise<Fern.EndpointSnippetTemplate> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernEnvironment.Prod,
                 "/snippet-template/get"
@@ -285,7 +286,7 @@ export class Templates {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern-api/sdk",
-                "X-Fern-SDK-Version": "0.12.1",
+                "X-Fern-SDK-Version": "0.13.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

@@ -9,6 +9,7 @@ export type Template =
     | Fern.Template.Enum
     | Fern.Template.DiscriminatedUnion
     | Fern.Template.Union
+    | Fern.Template.UnionV2
     | Fern.Template.Dict
     | Fern.Template.Iterable;
 
@@ -27,6 +28,10 @@ export declare namespace Template {
 
     interface Union extends Fern.UnionTemplate {
         type: "union";
+    }
+
+    interface UnionV2 extends Fern.UnionTemplateV2 {
+        type: "union_v2";
     }
 
     interface Dict extends Fern.DictTemplate {

@@ -1,8 +1,8 @@
 {
     "name": "@fern-api/sdk",
-    "version": "0.12.3",
+    "version": "0.13.0-beta0",
     "private": false,
-    "repository": "https://github.com/fern-api/fern-typescript",
+    "repository": "https://github.com/fern-api/typescript-sdk",
     "license": "MIT",
     "main": "./index.js",
     "types": "./index.d.ts",
@@ -19,7 +19,7 @@
         "node-fetch": "2.7.0",
         "qs": "6.11.2",
         "js-base64": "3.7.2",
-        "@fern-api/template-resolver": "0.7.5"
+        "@fern-api/template-resolver": "0.8.1"
     },
     "devDependencies": {
         "@types/url-join": "4.0.1",

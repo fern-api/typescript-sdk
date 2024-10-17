@@ -1,5 +1,6 @@
 import { Fern } from "../index";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
+import { FdrClient, FdrAPI } from "@fern-api/fdr-sdk";
 
 export class Template implements Fern.templates.EndpointSnippetTemplate {
     private endpointSnippetTemplate: Fern.EndpointSnippetTemplate;
@@ -19,8 +20,16 @@ export class Template implements Fern.templates.EndpointSnippetTemplate {
      */
     public resolve(payload: Fern.snippets.CustomSnippetPayload): Fern.snippets.Snippet {
         const _innerResolver = new SnippetTemplateResolver({
-            payload,
-            endpointSnippetTemplate: this.endpointSnippetTemplate,
+            payload: {
+                ...payload,
+                headers: payload.headers?.map((header): FdrAPI.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
+                pathParameters: payload.pathParameters?.map((header): FdrAPI.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
+                queryParameters: payload.queryParameters?.map((header): FdrAPI.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
+                requestBody: payload.requestBody ?? undefined,
+                auth: payload.auth ?? undefined,
+            },
+            endpointSnippetTemplate: this.endpointSnippetTemplate as FdrAPI.EndpointSnippetTemplate,
+            provideFdrClient: () => new FdrClient(),
         });
 
         return _innerResolver.resolve();
@@ -34,8 +43,16 @@ export class Template implements Fern.templates.EndpointSnippetTemplate {
      */
     public async resolveFormatted(payload: Fern.snippets.CustomSnippetPayload): Promise<Fern.snippets.Snippet> {
         const _innerResolver = new SnippetTemplateResolver({
-            payload,
-            endpointSnippetTemplate: this.endpointSnippetTemplate,
+            payload: {
+                ...payload,
+                headers: payload.headers?.map((header): FdrAPI.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
+                pathParameters: payload.pathParameters?.map((header): FdrAPI.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
+                queryParameters: payload.queryParameters?.map((header): FdrAPI.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
+                requestBody: payload.requestBody ?? undefined,
+                auth: payload.auth ?? undefined,
+            },
+            endpointSnippetTemplate: this.endpointSnippetTemplate as FdrAPI.EndpointSnippetTemplate,
+            provideFdrClient: () => new FdrClient(),
         });
 
         return await _innerResolver.resolveWithFormatting();
@@ -48,4 +65,8 @@ export class Template implements Fern.templates.EndpointSnippetTemplate {
     public static from(template: Fern.templates.EndpointSnippetTemplate): Template {
         return new Template(template.sdk, template.endpointId, template.snippetTemplate);
     }
+}
+
+export function isNonNullish<T>(x: T | null | undefined): x is T {
+    return x != null;
 }

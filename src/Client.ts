@@ -6,11 +6,13 @@ import * as environments from "./environments";
 import * as core from "./core";
 import { Snippets } from "./api/resources/snippets/client/Client";
 import { Templates } from "./api/resources/templates/client/Client";
+import { Tokens } from "./api/resources/tokens/client/Client";
 
 export declare namespace FernClient {
     interface Options {
         environment?: core.Supplier<environments.FernEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        fetcher?: core.FetchFunction;
     }
 
     interface RequestOptions {
@@ -33,5 +35,11 @@ export class FernClient {
 
     public get templates(): Templates {
         return (this._templates ??= new Templates(this._options));
+    }
+
+    protected _tokens: Tokens | undefined;
+
+    public get tokens(): Tokens {
+        return (this._tokens ??= new Tokens(this._options));
     }
 }

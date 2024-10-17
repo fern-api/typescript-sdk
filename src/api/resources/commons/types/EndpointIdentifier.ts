@@ -5,8 +5,8 @@
 import * as Fern from "../../../index";
 
 export interface EndpointIdentifier {
-    path: Fern.EndpointPath;
-    method: Fern.EndpointMethod;
+    path: Fern.EndpointPathLiteral;
+    method: Fern.HttpMethod;
     /**
      * The ID for the endpoint as declared within the IR, this is a unique name for the endpoint, whereas path and
      * method are not (specifically for the fern definition, consider chat and chat stream). This is optional to
