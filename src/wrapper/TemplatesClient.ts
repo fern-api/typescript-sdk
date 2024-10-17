@@ -1,10 +1,8 @@
-import { Templates as GeneratedTemplatesClient } from "../api/resources/templates/client/Client"
+import { Templates as GeneratedTemplatesClient } from "../api/resources/templates/client/Client";
 import { Fern } from "../index";
 import { Template } from "./Template";
 
-
 export class TemplatesClient extends GeneratedTemplatesClient {
-
     /**
      * Get the endpoint's snippet template for a particular SDK.
      * @throws {@link Fern.UnauthorizedError}
@@ -15,6 +13,6 @@ export class TemplatesClient extends GeneratedTemplatesClient {
         requestOptions?: GeneratedTemplatesClient.RequestOptions
     ): Promise<Template> {
         const innerTemplate = await super.get(request, requestOptions);
-        return Template.from(innerTemplate)
+        return Template.from(innerTemplate);
     }
 }
