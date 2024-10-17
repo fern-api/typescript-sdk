@@ -4,4 +4,7 @@
 
 import * as Fern from "../../../index";
 
-export type SnippetsByEndpointMethod = Record<Fern.HttpMethod, Fern.Snippet[] | undefined>;
+export interface UnionTemplateMember {
+    type: Fern.api.v1.read.TypeReference;
+    template: Fern.Template;
+}

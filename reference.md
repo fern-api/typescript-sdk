@@ -39,7 +39,7 @@ Get snippet by endpoint method and path
 ```ts
 await fern.snippets.get({
     endpoint: {
-        method: Fern.EndpointMethod.Get,
+        method: Fern.HttpMethod.Get,
         path: "/v1/search",
     },
 });
@@ -212,7 +212,7 @@ await fern.templates.register({
         },
         endpointId: {
             path: "string",
-            method: Fern.EndpointMethod.Put,
+            method: Fern.HttpMethod.Get,
             identifierOverride: "string",
         },
         snippetTemplate: {
@@ -352,7 +352,7 @@ await fern.templates.registerBatch({
             },
             endpointId: {
                 path: "string",
-                method: Fern.EndpointMethod.Put,
+                method: Fern.HttpMethod.Get,
                 identifierOverride: "string",
             },
             snippetTemplate: {
@@ -490,7 +490,7 @@ await fern.templates.get({
     },
     endpointId: {
         path: "string",
-        method: Fern.EndpointMethod.Put,
+        method: Fern.HttpMethod.Get,
         identifierOverride: "string",
     },
 });
@@ -525,6 +525,180 @@ await fern.templates.get({
 <dd>
 
 **requestOptions: `Templates.RequestOptions`**
+
+</dd>
+
+</dl>
+
+</dd>
+
+</dl>
+
+</dd>
+
+</dl>
+</details>
+
+## Tokens
+
+<details><summary> <code>fern.tokens.<a href="./src/api/resources/tokens/client/Client.ts">generate</a>({ ...params }) -> Fern.GenerateTokenResponse</code> </summary>
+
+<dl>
+
+<dd>
+
+#### 📝 Description
+
+<dl>
+
+<dd>
+
+<dl>
+
+<dd>
+
+Generate a token
+
+</dd>
+
+</dl>
+
+</dd>
+
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+
+<dd>
+
+<dl>
+
+<dd>
+
+```ts
+await fern.tokens.generate({
+    orgId: "string",
+    scope: "string",
+});
+```
+
+</dd>
+
+</dl>
+
+</dd>
+
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+
+<dd>
+
+<dl>
+
+<dd>
+
+**request: `Fern.GenerateTokenRequest`**
+
+</dd>
+
+</dl>
+
+<dl>
+
+<dd>
+
+**requestOptions: `Tokens.RequestOptions`**
+
+</dd>
+
+</dl>
+
+</dd>
+
+</dl>
+
+</dd>
+
+</dl>
+</details>
+
+<details><summary> <code>fern.tokens.<a href="./src/api/resources/tokens/client/Client.ts">revoke</a>({ ...params }) -> void</code> </summary>
+
+<dl>
+
+<dd>
+
+#### 📝 Description
+
+<dl>
+
+<dd>
+
+<dl>
+
+<dd>
+
+Revoke a token
+
+</dd>
+
+</dl>
+
+</dd>
+
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+
+<dd>
+
+<dl>
+
+<dd>
+
+```ts
+await fern.tokens.revoke({
+    orgId: "string",
+    tokenId: "string",
+});
+```
+
+</dd>
+
+</dl>
+
+</dd>
+
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+
+<dd>
+
+<dl>
+
+<dd>
+
+**request: `Fern.RevokeTokenRequest`**
+
+</dd>
+
+</dl>
+
+<dl>
+
+<dd>
+
+**requestOptions: `Tokens.RequestOptions`**
 
 </dd>
 

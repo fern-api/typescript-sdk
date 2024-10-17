@@ -1,8 +1,8 @@
 {
     "name": "@fern-api/sdk",
-    "version": "0.12.3",
+    "version": "0.13.0",
     "private": false,
-    "repository": "https://github.com/fern-api/fern-typescript",
+    "repository": "https://github.com/fern-api/typescript-sdk",
     "license": "MIT",
     "main": "./index.js",
     "types": "./index.d.ts",

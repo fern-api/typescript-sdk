@@ -12,6 +12,7 @@ export declare namespace Snippets {
     interface Options {
         environment?: core.Supplier<environments.FernEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        fetcher?: core.FetchFunction;
     }
 
     interface RequestOptions {
@@ -43,7 +44,7 @@ export class Snippets {
      * @example
      *     await fern.snippets.get({
      *         endpoint: {
-     *             method: Fern.EndpointMethod.Get,
+     *             method: Fern.HttpMethod.Get,
      *             path: "/v1/search"
      *         }
      *     })
@@ -52,7 +53,7 @@ export class Snippets {
         request: Fern.GetSnippetRequest,
         requestOptions?: Snippets.RequestOptions
     ): Promise<Fern.Snippet[]> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernEnvironment.Prod,
                 "/snippets"
@@ -62,7 +63,7 @@ export class Snippets {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern-api/sdk",
-                "X-Fern-SDK-Version": "0.12.1",
+                "X-Fern-SDK-Version": "0.13.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -81,7 +82,7 @@ export class Snippets {
                 case "UnauthorizedError":
                     throw new Fern.UnauthorizedError(_response.error.body as string);
                 case "UserNotInOrgError":
-                    throw new Fern.UserNotInOrgError();
+                    throw new Fern.UserNotInOrgError(_response.error.body as string);
                 case "UnavailableError":
                     throw new Fern.UnavailableError(_response.error.body as string);
                 case "ApiIdRequiredError":
@@ -154,7 +155,7 @@ export class Snippets {
             _queryParams["page"] = page.toString();
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernEnvironment.Prod,
                 "/snippets/load"
@@ -164,7 +165,7 @@ export class Snippets {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern-api/sdk",
-                "X-Fern-SDK-Version": "0.12.1",
+                "X-Fern-SDK-Version": "0.13.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -184,7 +185,7 @@ export class Snippets {
                 case "UnauthorizedError":
                     throw new Fern.UnauthorizedError(_response.error.body as string);
                 case "UserNotInOrgError":
-                    throw new Fern.UserNotInOrgError();
+                    throw new Fern.UserNotInOrgError(_response.error.body as string);
                 case "UnavailableError":
                     throw new Fern.UnavailableError(_response.error.body as string);
                 case "InvalidPageError":

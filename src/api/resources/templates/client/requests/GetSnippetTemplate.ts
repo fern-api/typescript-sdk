@@ -16,7 +16,7 @@ import * as Fern from "../../../../index";
  *         },
  *         endpointId: {
  *             path: "string",
- *             method: Fern.EndpointMethod.Put,
+ *             method: Fern.HttpMethod.Get,
  *             identifierOverride: "string"
  *         }
  *     }

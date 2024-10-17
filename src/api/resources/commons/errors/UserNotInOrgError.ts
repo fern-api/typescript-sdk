@@ -5,10 +5,11 @@
 import * as errors from "../../../../errors/index";
 
 export class UserNotInOrgError extends errors.FernError {
-    constructor() {
+    constructor(body: string) {
         super({
             message: "UserNotInOrgError",
             statusCode: 403,
+            body: body,
         });
         Object.setPrototypeOf(this, UserNotInOrgError.prototype);
     }
