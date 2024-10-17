@@ -4,13 +4,14 @@ import { FernRegistry, FernRegistryClient } from "@fern-fern/fdr-cjs-sdk";
 
 export class Template implements Fern.templates.EndpointSnippetTemplate {
     private endpointSnippetTemplate: Fern.EndpointSnippetTemplate;
-    
+
     constructor(
         public readonly sdk: Fern.snippets.Sdk,
         public readonly endpointId: Fern.commons.EndpointIdentifier,
-        public readonly snippetTemplate: Fern.templates.VersionedSnippetTemplate
+        public readonly snippetTemplate: Fern.templates.VersionedSnippetTemplate,
+        public readonly apiDefinitionId?: Fern.ApiDefinitionId
     ) {
-        this.endpointSnippetTemplate = {sdk, endpointId, snippetTemplate};
+        this.endpointSnippetTemplate = { sdk, endpointId, snippetTemplate, apiDefinitionId };
     }
 
     /**
@@ -18,31 +19,34 @@ export class Template implements Fern.templates.EndpointSnippetTemplate {
      * @param payload the paylod to resolve against
      * @returns the snippet
      */
-    public resolve(payload: Fern.snippets.CustomSnippetPayload): Fern.snippets.Snippet {
+    public async resolve(payload: Fern.snippets.CustomSnippetPayload): Promise<Fern.snippets.Snippet> {
+        const response = this.apiDefinitionId != null ? await new FernRegistryClient().api.v1.read.getApi(FernRegistry.ApiDefinitionId(this.apiDefinitionId)) : undefined;
         const _innerResolver = new SnippetTemplateResolver({
             payload: {
                 ...payload,
-                headers: payload.headers?.map((header): FernRegistry.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
-                pathParameters: payload.pathParameters?.map((header): FernRegistry.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
-                queryParameters: payload.queryParameters?.map((header): FernRegistry.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
+                headers: payload.headers?.map((header): FernRegistry.ParameterPayload => {
+                    return { name: header.name, value: header.value ?? undefined };
+                }),
+                pathParameters: payload.pathParameters?.map((header): FernRegistry.ParameterPayload => {
+                    return { name: header.name, value: header.value ?? undefined };
+                }),
+                queryParameters: payload.queryParameters?.map((header): FernRegistry.ParameterPayload => {
+                    return { name: header.name, value: header.value ?? undefined };
+                }),
                 requestBody: payload.requestBody ?? undefined,
                 auth: payload.auth ?? undefined,
             },
             endpointSnippetTemplate: this.endpointSnippetTemplate as FernRegistry.EndpointSnippetTemplate,
-            apiDefinitionGetter: async (id) => {
-                const response = await new FernRegistryClient().api.v1.read.getApi(FernRegistry.ApiDefinitionId(id));
-                if (response.ok) {
-                    return response.body;
-                }
-                throw new Error(JSON.stringify(response.error));
-            },
         });
-
-        return _innerResolver.resolve();
+        if (response?.ok) {
+            return _innerResolver.resolve(response.body);
+        } else {
+            return _innerResolver.resolve();
+        }
     }
 
     /**
-     * Resolves a particular request payload against the template to produce a snippet with 
+     * Resolves a particular request payload against the template to produce a snippet with
      * formatting.
      * @param payload the paylod to resolve against
      * @returns the snippet
@@ -51,9 +55,15 @@ export class Template implements Fern.templates.EndpointSnippetTemplate {
         const _innerResolver = new SnippetTemplateResolver({
             payload: {
                 ...payload,
-                headers: payload.headers?.map((header): FernRegistry.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
-                pathParameters: payload.pathParameters?.map((header): FernRegistry.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
-                queryParameters: payload.queryParameters?.map((header): FernRegistry.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
+                headers: payload.headers?.map((header): FernRegistry.ParameterPayload => {
+                    return { name: header.name, value: header.value ?? undefined };
+                }),
+                pathParameters: payload.pathParameters?.map((header): FernRegistry.ParameterPayload => {
+                    return { name: header.name, value: header.value ?? undefined };
+                }),
+                queryParameters: payload.queryParameters?.map((header): FernRegistry.ParameterPayload => {
+                    return { name: header.name, value: header.value ?? undefined };
+                }),
                 requestBody: payload.requestBody ?? undefined,
                 auth: payload.auth ?? undefined,
             },
@@ -75,7 +85,7 @@ export class Template implements Fern.templates.EndpointSnippetTemplate {
     }
 
     public static from(template: Fern.templates.EndpointSnippetTemplate): Template {
-        return new Template(template.sdk, template.endpointId, template.snippetTemplate);
+        return new Template(template.sdk, template.endpointId, template.snippetTemplate, template.apiDefinitionId);
     }
 }
 
