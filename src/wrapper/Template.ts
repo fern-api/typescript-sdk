@@ -1,6 +1,6 @@
 import { Fern } from "../index";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
-import { FdrClient, FdrAPI } from "@fern-api/fdr-sdk";
+import { FernRegistry, FernRegistryClient } from "@fern-fern/fdr-cjs-sdk";
 
 export class Template implements Fern.templates.EndpointSnippetTemplate {
     private endpointSnippetTemplate: Fern.EndpointSnippetTemplate;
@@ -22,14 +22,20 @@ export class Template implements Fern.templates.EndpointSnippetTemplate {
         const _innerResolver = new SnippetTemplateResolver({
             payload: {
                 ...payload,
-                headers: payload.headers?.map((header): FdrAPI.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
-                pathParameters: payload.pathParameters?.map((header): FdrAPI.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
-                queryParameters: payload.queryParameters?.map((header): FdrAPI.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
+                headers: payload.headers?.map((header): FernRegistry.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
+                pathParameters: payload.pathParameters?.map((header): FernRegistry.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
+                queryParameters: payload.queryParameters?.map((header): FernRegistry.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
                 requestBody: payload.requestBody ?? undefined,
                 auth: payload.auth ?? undefined,
             },
-            endpointSnippetTemplate: this.endpointSnippetTemplate as FdrAPI.EndpointSnippetTemplate,
-            provideFdrClient: () => new FdrClient(),
+            endpointSnippetTemplate: this.endpointSnippetTemplate as FernRegistry.EndpointSnippetTemplate,
+            apiDefinitionGetter: async (id) => {
+                const response = await new FernRegistryClient().api.v1.read.getApi(FernRegistry.ApiDefinitionId(id));
+                if (response.ok) {
+                    return response.body;
+                }
+                throw new Error(JSON.stringify(response.error));
+            },
         });
 
         return _innerResolver.resolve();
@@ -45,14 +51,20 @@ export class Template implements Fern.templates.EndpointSnippetTemplate {
         const _innerResolver = new SnippetTemplateResolver({
             payload: {
                 ...payload,
-                headers: payload.headers?.map((header): FdrAPI.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
-                pathParameters: payload.pathParameters?.map((header): FdrAPI.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
-                queryParameters: payload.queryParameters?.map((header): FdrAPI.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
+                headers: payload.headers?.map((header): FernRegistry.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
+                pathParameters: payload.pathParameters?.map((header): FernRegistry.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
+                queryParameters: payload.queryParameters?.map((header): FernRegistry.ParameterPayload => { return { name: header.name, value: header.value ?? undefined } }),
                 requestBody: payload.requestBody ?? undefined,
                 auth: payload.auth ?? undefined,
             },
-            endpointSnippetTemplate: this.endpointSnippetTemplate as FdrAPI.EndpointSnippetTemplate,
-            provideFdrClient: () => new FdrClient(),
+            endpointSnippetTemplate: this.endpointSnippetTemplate as FernRegistry.EndpointSnippetTemplate,
+            apiDefinitionGetter: async (id) => {
+                const response = await new FernRegistryClient().api.v1.read.getApi(FernRegistry.ApiDefinitionId(id));
+                if (response.ok) {
+                    return response.body;
+                }
+                throw new Error(JSON.stringify(response.error));
+            },
         });
 
         return await _innerResolver.resolveWithFormatting();
