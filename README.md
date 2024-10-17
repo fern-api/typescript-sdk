@@ -58,7 +58,7 @@ const template = await fern.templates.get({
 
 // Build a snippet with a payload, this happens on the client side,
 // without need for another API call, improving latency dramatically.
-const snippet1 = template.resolve({
+const snippet1 = await template.resolve({
     pathParameters: [{
       name: "someFilter",
       value: "test1"
@@ -69,7 +69,7 @@ const snippet1 = template.resolve({
   })
 
 // You can build as many snippets as you'd like!
-const snippet2 = template.resolve({
+const snippet2 = await template.resolve({
   pathParameters: [{
     name: "someFilter",
     value: "anotherTest"
